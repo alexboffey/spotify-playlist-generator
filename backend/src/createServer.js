@@ -9,7 +9,7 @@ module.exports = function createServer() {
     typeDefs: "src/schema.graphql",
     resolvers: {
       Query,
-      // Mutation
+      Mutation
     },
     resolverValidationOptions: {
       requireResolversForResolveType: false
