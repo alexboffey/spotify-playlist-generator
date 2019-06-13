@@ -6,7 +6,7 @@ import "./App.css";
 
 const USERS_QUERY = gql`
   query {
-    users {
+    me {
       id
       name
       email

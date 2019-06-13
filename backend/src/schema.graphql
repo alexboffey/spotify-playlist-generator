@@ -1,4 +1,5 @@
 # import * from "../generated/prisma.graphql"
+
 type Query {
   users: [User]!
   me: User

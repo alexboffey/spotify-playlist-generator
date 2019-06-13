@@ -4,7 +4,7 @@ const Mutation = require("./resolvers/Mutation");
 const Query = require("./resolvers/Query");
 
 // Create GraphQL Yoga Server
-module.exports = function createServer() {
+module.exports = function() {
   return new GraphQLServer({
     typeDefs: "src/schema.graphql",
     resolvers: {
