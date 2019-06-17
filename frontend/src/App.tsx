@@ -2,7 +2,8 @@ import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import gql from "graphql-tag";
 import apollo from "./lib/createApolloClient";
-import "./App.css";
+import "antd/dist/antd.min.css";
+import Layout from "./components/Layout";
 
 const USER_QUERY = gql`
   query {
@@ -26,11 +27,14 @@ interface UserQueryData {
 
 const MY_TOP_TRACKS_QUERY = gql`
   query {
-    myTopTracks {
+    myTopTracks(limit: 5, time_range: short_term) {
       items {
         name
         id
         href
+        album {
+          name
+        }
       }
       next
       previous
@@ -55,7 +59,7 @@ interface MyTopTracksData {
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apollo}>
-      <div className="App">
+      <Layout>
         <Query<UserQueryData> query={USER_QUERY}>
           {({ loading, data, error }) => {
             if (loading) return <p>Loading...</p>;
@@ -100,7 +104,7 @@ const App: React.FC = () => {
 
         <a href="/auth/spotify">Log In with Spotify</a>
         <a href="/auth/logout">Log Out</a>
-      </div>
+      </Layout>
     </ApolloProvider>
   );
 };
