@@ -1,3 +1,4 @@
+const refresh = require("passport-oauth2-refresh");
 const { strategy } = require("../services/spotify");
 
 function serializeUser(user, done) {
@@ -11,6 +12,7 @@ function serializeUser(user, done) {
 
 module.exports = passport => {
   passport.use(strategy);
+  refresh.use(strategy);
   passport.serializeUser(serializeUser);
   passport.deserializeUser(serializeUser);
 };

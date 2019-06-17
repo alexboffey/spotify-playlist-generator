@@ -1,7 +1,13 @@
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const refresh = require("passport-oauth2-refresh");
 const cookieParser = require("cookie-parser");
 const database = require("../services/database");
+
+const getMinutesUntilExpiration = timeExpires => {
+  const diff = new Date(timeExpires) - new Date();
+  return Math.floor(diff / 1000 / 60);
+};
 
 /**
  * @param {Object} server
@@ -20,7 +26,7 @@ module.exports = server => {
     const { token } = req.cookies;
 
     if (token) {
-      const { userId, accessToken, refreshToken, expires_in } = jwt.verify(
+      const { userId, accessToken, refreshToken, time_expires } = jwt.verify(
         token,
         process.env.APP_SECRET
       );
@@ -28,7 +34,21 @@ module.exports = server => {
       req.userId = userId;
       req.accessToken = accessToken;
       req.refreshToken = refreshToken;
-      req.expires_in = expires_in;
+
+      // Refresh access token here if necessary
+      if (getMinutesUntilExpiration(time_expires) < 0) {
+        // MAKE SURE THIS WORKS LOL
+        refresh.requestNewAccessToken(
+          "spotify",
+          refreshToken,
+          (err, accessToken, refreshToken) => {
+            if (err) throw new Error(err);
+
+            req.accessToken = accessToken;
+            req.refreshToken = refreshToken;
+          }
+        );
+      }
     }
 
     next();

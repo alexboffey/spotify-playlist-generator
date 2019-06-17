@@ -3,7 +3,26 @@ const jwt = require("jsonwebtoken");
 const database = require("../services/database");
 
 // Define spotify authorization scope
-const scope = ["user-read-email", "user-read-private"];
+const scope = [
+  "user-read-email",
+  "user-read-private",
+  "user-library-modify",
+  "user-library-read",
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "playlist-modify-public",
+  "playlist-modify-private",
+  "user-read-recently-played",
+  "user-top-read"
+];
+
+const getTimeExpires = (expires_in = 3600) => {
+  let timeExpires = new Date();
+  // give ourselves a little breathing room before it actually expires
+  timeExpires.setSeconds(timeExpires.getSeconds() + expires_in * 0.9);
+
+  return timeExpires;
+};
 
 /**
  * @param {Object} server
@@ -26,6 +45,7 @@ module.exports = server => {
       } = req.user;
 
       const email = emails[0].value;
+      const time_expires = getTimeExpires(expires_in);
 
       const userExists = await database.query.user({ where: { email } });
       let user;
@@ -44,14 +64,14 @@ module.exports = server => {
 
       // Generate JWT token
       const token = jwt.sign(
-        { userId: user.id, accessToken, refreshToken, expires_in },
+        { userId: user.id, accessToken, refreshToken, time_expires },
         process.env.APP_SECRET
       );
 
       // Set cookie with token
       res.cookie("token", token, {
         httpOnly: true,
-        maxAge: expires_in * 1000 // 1hr
+        maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
       });
 
       next();
