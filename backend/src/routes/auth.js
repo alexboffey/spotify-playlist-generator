@@ -14,7 +14,7 @@ module.exports = server => {
   // Authenticate route
   server.express.use(
     "/auth/spotify",
-    passport.authenticate("spotify", { scope }),
+    passport.authenticate("spotify", { scope, showDialog: true }),
     async (req, res, next) => {
       const {
         id: spotifyId,
