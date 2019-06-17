@@ -1,4 +1,5 @@
 const { Strategy } = require("passport-spotify");
+const SpotifyWebApi = require("spotify-web-api-node");
 
 exports.strategy = new Strategy(
   {
@@ -16,3 +17,8 @@ exports.strategy = new Strategy(
     });
   }
 );
+
+exports.spotifyApi = new SpotifyWebApi({
+  clientID: process.env.SPOTIFY_CLIENT,
+  clientSecret: process.env.SPOTIFY_SECRET
+});

@@ -1,8 +1,14 @@
 # import * from "../generated/prisma.graphql"
 
+enum TimeRange {
+  long_term
+  medium_term
+  short_term
+}
+
 type Query {
-  users: [User]!
   me: User
+  myTopTracks(limit: Int, offset: Int, time_range: TimeRange): MyTopTracks
 }
 
 type Mutation {
@@ -15,9 +21,17 @@ type SuccessMessage {
   message: String
 }
 
-type User {
-  id: ID!
-  spotifyId: String!
-  name: String!
-  email: String!
+type MyTopTracks {
+  items: [Track]!
+  next: String
+  previous: String
+  total: Int!
+  limit: Int!
+  href: String!
+}
+
+type Track {
+  id: String!
+  name: String
+  href: String
 }

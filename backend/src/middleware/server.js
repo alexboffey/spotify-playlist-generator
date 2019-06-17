@@ -3,6 +3,7 @@ const passport = require("passport");
 const refresh = require("passport-oauth2-refresh");
 const cookieParser = require("cookie-parser");
 const database = require("../services/database");
+const { spotifyApi } = require("../services/spotify");
 
 const getMinutesUntilExpiration = timeExpires => {
   const diff = new Date(timeExpires) - new Date();
@@ -35,6 +36,11 @@ module.exports = server => {
       req.accessToken = accessToken;
       req.refreshToken = refreshToken;
 
+      // Set access token on api wrapper
+      if (!spotifyApi.getAccessToken()) {
+        spotifyApi.setAccessToken(accessToken);
+      }
+
       // Refresh access token here if necessary
       if (getMinutesUntilExpiration(time_expires) < 0) {
         // MAKE SURE THIS WORKS LOL
@@ -46,6 +52,9 @@ module.exports = server => {
 
             req.accessToken = accessToken;
             req.refreshToken = refreshToken;
+
+            // Update access token on api wrapper
+            spotifyApi.setAccessToken(accessToken);
           }
         );
       }
