@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import gql from "graphql-tag";
 import apollo from "./lib/createApolloClient";
@@ -60,6 +60,11 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={apollo}>
       <Layout>
+        <a href="/auth/spotify">Log In with Spotify</a>
+        <br />
+        <a href="/auth/logout">Log Out</a>
+        <br /><br />
+
         <Query<UserQueryData> query={USER_QUERY}>
           {({ loading, data, error }) => {
             if (loading) return <p>Loading...</p>;
@@ -101,9 +106,6 @@ const App: React.FC = () => {
             );
           }}
         </Query>
-
-        <a href="/auth/spotify">Log In with Spotify</a>
-        <a href="/auth/logout">Log Out</a>
       </Layout>
     </ApolloProvider>
   );
