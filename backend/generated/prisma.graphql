@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/alex-boffey-9406f5/spotify-playlist-generator-dev/dev
-# timestamp: Thu Jun 13 2019 12:39:25 GMT+0100 (British Summer Time)
+# timestamp: Mon Jun 17 2019 15:12:30 GMT+0100 (British Summer Time)
 
 type AggregateUser {
   count: Int!
@@ -52,15 +52,6 @@ type PageInfo {
   endCursor: String
 }
 
-enum Permission {
-  ADMIN
-  USER
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
-  PERMISSIONUPDATE
-}
-
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   user(where: UserWhereUniqueInput!): User
@@ -79,12 +70,9 @@ type Subscription {
 
 type User implements Node {
   id: ID!
+  spotifyId: String!
   name: String!
   email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permissions: [Permission!]!
 }
 
 """A connection to a list of items."""
@@ -99,16 +87,9 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
+  spotifyId: String!
   name: String!
   email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permissions: UserCreatepermissionsInput
-}
-
-input UserCreatepermissionsInput {
-  set: [Permission!]
 }
 
 """An edge in a connection."""
@@ -123,26 +104,19 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  spotifyId_ASC
+  spotifyId_DESC
   name_ASC
   name_DESC
   email_ASC
   email_DESC
-  password_ASC
-  password_DESC
-  resetToken_ASC
-  resetToken_DESC
-  resetTokenExpiry_ASC
-  resetTokenExpiry_DESC
 }
 
 type UserPreviousValues {
   id: ID!
+  spotifyId: String!
   name: String!
   email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permissions: [Permission!]!
 }
 
 type UserSubscriptionPayload {
@@ -183,25 +157,15 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
+  spotifyId: String
   name: String
   email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: Float
-  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
+  spotifyId: String
   name: String
   email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: Float
-  permissions: UserUpdatepermissionsInput
-}
-
-input UserUpdatepermissionsInput {
-  set: [Permission!]
 }
 
 input UserWhereInput {
@@ -253,6 +217,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  spotifyId: String
+
+  """All values that are not equal to given value."""
+  spotifyId_not: String
+
+  """All values that are contained in given list."""
+  spotifyId_in: [String!]
+
+  """All values that are not contained in given list."""
+  spotifyId_not_in: [String!]
+
+  """All values less than the given value."""
+  spotifyId_lt: String
+
+  """All values less than or equal the given value."""
+  spotifyId_lte: String
+
+  """All values greater than the given value."""
+  spotifyId_gt: String
+
+  """All values greater than or equal the given value."""
+  spotifyId_gte: String
+
+  """All values containing the given string."""
+  spotifyId_contains: String
+
+  """All values not containing the given string."""
+  spotifyId_not_contains: String
+
+  """All values starting with the given string."""
+  spotifyId_starts_with: String
+
+  """All values not starting with the given string."""
+  spotifyId_not_starts_with: String
+
+  """All values ending with the given string."""
+  spotifyId_ends_with: String
+
+  """All values not ending with the given string."""
+  spotifyId_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -333,108 +337,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
-  resetToken: String
-
-  """All values that are not equal to given value."""
-  resetToken_not: String
-
-  """All values that are contained in given list."""
-  resetToken_in: [String!]
-
-  """All values that are not contained in given list."""
-  resetToken_not_in: [String!]
-
-  """All values less than the given value."""
-  resetToken_lt: String
-
-  """All values less than or equal the given value."""
-  resetToken_lte: String
-
-  """All values greater than the given value."""
-  resetToken_gt: String
-
-  """All values greater than or equal the given value."""
-  resetToken_gte: String
-
-  """All values containing the given string."""
-  resetToken_contains: String
-
-  """All values not containing the given string."""
-  resetToken_not_contains: String
-
-  """All values starting with the given string."""
-  resetToken_starts_with: String
-
-  """All values not starting with the given string."""
-  resetToken_not_starts_with: String
-
-  """All values ending with the given string."""
-  resetToken_ends_with: String
-
-  """All values not ending with the given string."""
-  resetToken_not_ends_with: String
-  resetTokenExpiry: Float
-
-  """All values that are not equal to given value."""
-  resetTokenExpiry_not: Float
-
-  """All values that are contained in given list."""
-  resetTokenExpiry_in: [Float!]
-
-  """All values that are not contained in given list."""
-  resetTokenExpiry_not_in: [Float!]
-
-  """All values less than the given value."""
-  resetTokenExpiry_lt: Float
-
-  """All values less than or equal the given value."""
-  resetTokenExpiry_lte: Float
-
-  """All values greater than the given value."""
-  resetTokenExpiry_gt: Float
-
-  """All values greater than or equal the given value."""
-  resetTokenExpiry_gte: Float
 }
 
 input UserWhereUniqueInput {

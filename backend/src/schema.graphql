@@ -17,7 +17,7 @@ type SuccessMessage {
 
 type User {
   id: ID!
+  spotifyId: String!
   name: String!
   email: String!
-  permissions: [Permission!]!
 }
