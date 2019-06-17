@@ -15,6 +15,15 @@ const USER_QUERY = gql`
   }
 `;
 
+interface UserQueryData {
+  me: {
+    id: string;
+    name: string;
+    email: string;
+    spotifyId: string;
+  };
+}
+
 const MY_TOP_TRACKS_QUERY = gql`
   query {
     myTopTracks {
@@ -32,13 +41,31 @@ const MY_TOP_TRACKS_QUERY = gql`
   }
 `;
 
+interface MyTopTracksData {
+  myTopTracks: {
+    items: Array<{ name: string; id: string; href: string }>;
+    next: string;
+    previous: string;
+    total: number;
+    limit: number;
+    href: string;
+  };
+}
+
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apollo}>
       <div className="App">
-        <Query query={USER_QUERY}>
-          {({ loading, data }: { loading: boolean; data: any }) => {
+        <Query<UserQueryData> query={USER_QUERY}>
+          {({ loading, data, error }) => {
             if (loading) return <p>Loading...</p>;
+            if (error) {
+              return (
+                <pre>
+                  <code>{JSON.stringify(error, null, 2)}</code>
+                </pre>
+              );
+            }
 
             return (
               <React.Fragment>
@@ -50,9 +77,16 @@ const App: React.FC = () => {
           }}
         </Query>
 
-        <Query query={MY_TOP_TRACKS_QUERY}>
-          {({ loading, data }: { loading: boolean; data: any }) => {
+        <Query<MyTopTracksData> query={MY_TOP_TRACKS_QUERY}>
+          {({ loading, data, error }) => {
             if (loading) return <p>Loading...</p>;
+            if (error) {
+              return (
+                <pre>
+                  <code>{JSON.stringify(error, null, 2)}</code>
+                </pre>
+              );
+            }
 
             return (
               <React.Fragment>
