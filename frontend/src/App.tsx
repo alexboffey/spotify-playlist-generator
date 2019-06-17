@@ -107,6 +107,9 @@ const App: React.FC = () => {
             </form>
           )}
         </Mutation>
+
+        <a href="/auth/spotify">Log In with Spotify</a>
+        <a href="/auth/logout">Log Out</a>
       </div>
     </ApolloProvider>
   );
