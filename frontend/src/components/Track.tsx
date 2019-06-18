@@ -5,7 +5,6 @@ interface ITrack {
   id: string;
   name: string;
   preview_url?: string;
-  is_playable: boolean;
   artists: Array<{ id: string; name: string }>;
   album: { id: string; name: string; images: Array<{ url: string }> };
 }
@@ -44,7 +43,7 @@ const Track: React.FunctionComponent<ITrack> = ({
   name,
   artists,
   album,
-  preview_url,
+  preview_url
 }) => {
   const audio = new Audio(preview_url);
 

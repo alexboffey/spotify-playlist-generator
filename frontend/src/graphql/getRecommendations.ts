@@ -7,7 +7,6 @@ export const GET_RECOMMENDATIONS_QUERY = gql`
         id
         name
         preview_url
-        is_playable
         artists {
           id
           name
@@ -30,7 +29,6 @@ export interface IGetRecommendationsQuery {
       id: string;
       name: string;
       preview_url?: string;
-      is_playable: boolean;
       artists: Array<{ id: string; name: string }>;
       album: { id: string; name: string; images: Array<{ url: string }> };
     }>;
