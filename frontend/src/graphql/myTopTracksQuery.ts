@@ -20,7 +20,7 @@ export const MY_TOP_TRACKS_QUERY = gql`
   }
 `;
 
-export interface MyTopTracksData {
+export interface IMyTopTracksQuery {
   myTopTracks: {
     items: Array<{ name: string; id: string; href: string }>;
     next: string;

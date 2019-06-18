@@ -18,9 +18,20 @@ type Query {
   me: User
   myTopTracks(limit: Int, offset: Int, time_range: TimeRange): MyTopTracks
   myTopArtists(limit: Int, offset: Int, time_range: TimeRange): MyTopArtists
+  getRecommendations(
+    limit: Int
+    seed_artists: String
+    seed_tracks: String
+    seed_genres: String
+  ): GetRecommendations
 }
 
 # type Mutation {}
+
+type GetRecommendations {
+  tracks: [Track]
+  seeds: [Seed]
+}
 
 type MyTopTracks {
   items: [Track]!
@@ -85,6 +96,7 @@ type Track {
   explicit: Boolean
   album: Album!
   external_urls: ExternalUrls
+  artists: [Artist]
 }
 
 type ExternalUrls {
@@ -95,4 +107,13 @@ type Image {
   height: Int!
   width: Int!
   url: String!
+}
+
+type Seed {
+  initialPoolSize: Int
+  afterFilteringSize: Int
+  afterRelinkingSize: Int
+  href: String
+  id: String
+  type: String
 }

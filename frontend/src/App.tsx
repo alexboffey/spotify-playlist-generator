@@ -8,6 +8,7 @@ import { USER_QUERY, IUserQuery } from "./graphql/userQuery";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
+import Playlist from "./components/Playlist";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -20,7 +21,7 @@ const App: React.FunctionComponent = () => {
           if (data && data.me) {
             return (
               <Layout me={data.me}>
-                <p>Something meaningful...</p>
+                <Playlist />
               </Layout>
             );
           }
