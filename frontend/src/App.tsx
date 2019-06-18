@@ -56,6 +56,34 @@ interface MyTopTracksData {
   };
 }
 
+const MY_TOP_ARTISTS_QUERY = gql`
+  query {
+    myTopArtists(limit: 5, time_range: short_term) {
+      items {
+        name
+        id
+        href
+      }
+      next
+      previous
+      total
+      limit
+      href
+    }
+  }
+`;
+
+interface MyTopArtistsData {
+  myTopArtists: {
+    items: Array<{ name: string; id: string; href: string }>;
+    next: string;
+    previous: string;
+    total: number;
+    limit: number;
+    href: string;
+  };
+}
+
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apollo}>
@@ -63,7 +91,8 @@ const App: React.FC = () => {
         <a href="/auth/spotify">Log In with Spotify</a>
         <br />
         <a href="/auth/logout">Log Out</a>
-        <br /><br />
+        <br />
+        <br />
 
         <Query<UserQueryData> query={USER_QUERY}>
           {({ loading, data, error }) => {
@@ -87,6 +116,27 @@ const App: React.FC = () => {
         </Query>
 
         <Query<MyTopTracksData> query={MY_TOP_TRACKS_QUERY}>
+          {({ loading, data, error }) => {
+            if (loading) return <p>Loading...</p>;
+            if (error) {
+              return (
+                <pre>
+                  <code>{JSON.stringify(error, null, 2)}</code>
+                </pre>
+              );
+            }
+
+            return (
+              <React.Fragment>
+                <pre>
+                  <code>{JSON.stringify(data, null, 2)}</code>
+                </pre>
+              </React.Fragment>
+            );
+          }}
+        </Query>
+
+        <Query<MyTopArtistsData> query={MY_TOP_ARTISTS_QUERY}>
           {({ loading, data, error }) => {
             if (loading) return <p>Loading...</p>;
             if (error) {

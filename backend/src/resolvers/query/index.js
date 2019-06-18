@@ -1,4 +1,5 @@
 module.exports = {
   me: require("./me"),
-  myTopTracks: require("./myTopTracks")
+  myTopTracks: require("./myTopTracks"),
+  myTopArtists: require("./myTopArtists")
 };

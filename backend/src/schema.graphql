@@ -9,6 +9,7 @@ enum TimeRange {
 type Query {
   me: User
   myTopTracks(limit: Int, offset: Int, time_range: TimeRange): MyTopTracks
+  myTopArtists(limit: Int, offset: Int, time_range: TimeRange): MyTopArtists
 }
 
 # type Mutation {}
@@ -22,13 +23,30 @@ type MyTopTracks {
   href: String!
 }
 
+type MyTopArtists {
+  items: [Artist]
+  next: String
+  previous: String
+  total: Int!
+  limit: Int!
+  href: String!
+}
+
 type Artist {
   href: String!
   id: String!
   name: String!
+  popularity: Int
   type: String!
   uri: String!
   external_urls: ExternalUrls
+  images: [Image]
+  followers: Followers
+}
+
+type Followers {
+  href: String
+  total: Int
 }
 
 type Album {
