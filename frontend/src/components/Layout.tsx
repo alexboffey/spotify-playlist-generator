@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu, Icon, Dropdown, Avatar } from "antd";
 
 const { Content, Footer, Sider, Header } = Layout;
@@ -11,9 +11,12 @@ interface IAppLayout {
     spotifyId: string;
     images: Array<{ url: string }>;
   };
+  render: (activeMenuKey: string) => any;
 }
 
-const AppLayout: React.FunctionComponent<IAppLayout> = ({ children, me }) => {
+const AppLayout: React.FunctionComponent<IAppLayout> = ({ render, me }) => {
+  const [activeMenuKey, setActiveMenuKey] = useState("playlist");
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header style={{ display: "flex", background: "#fff" }}>
@@ -66,6 +69,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children, me }) => {
               mode="inline"
               defaultSelectedKeys={["playlist"]}
               style={{ height: "100%" }}
+              onClick={({ key }) => setActiveMenuKey(key)}
             >
               <Menu.Item key="playlist">
                 <Icon type="unordered-list" />
@@ -82,7 +86,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children, me }) => {
             </Menu>
           </Sider>
           <Content style={{ padding: "0 24px", minHeight: 280 }}>
-            {children}
+            {render(activeMenuKey)}
           </Content>
         </Layout>
       </Content>

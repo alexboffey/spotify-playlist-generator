@@ -43,11 +43,15 @@ module.exports = server => {
 
       // Refresh access token here if necessary
       if (getMinutesUntilExpiration(time_expires) < 0) {
+        console.log("REQUEST ACCESS TOKEN")
+
         // MAKE SURE THIS WORKS LOL
         refresh.requestNewAccessToken(
           "spotify",
           refreshToken,
           (err, accessToken, refreshToken) => {
+            console.log(accessToken, refreshToken)
+
             if (err) throw new Error(err);
 
             req.accessToken = accessToken;

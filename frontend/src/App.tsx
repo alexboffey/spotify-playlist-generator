@@ -20,9 +20,15 @@ const App: React.FunctionComponent = () => {
           if (data && !data.me) return <Login />;
           if (data && data.me) {
             return (
-              <Layout me={data.me}>
-                <Playlist />
-              </Layout>
+              <Layout
+                me={data.me}
+                render={activeMenuKey => {
+                  if (activeMenuKey === "playlist") return <Playlist />;
+                  if (activeMenuKey === "seeds") return <p>Seeds</p>;
+                  if (activeMenuKey === "audio_features") return <p>Audio Features</p>;
+                  return <p>Unexpected Menu Key</p>
+                }}
+              />
             );
           }
         }}

@@ -24,7 +24,7 @@ const Playlist: React.FunctionComponent = () => {
       <Divider />
       <Query<IMyTopArtistsQuery>
         query={MY_TOP_ARTISTS_QUERY}
-        variables={{ limit: 40 }}
+        variables={{ limit: 100 }}
       >
         {({ data, loading, error }) => {
           if (loading) return <Spin />;
