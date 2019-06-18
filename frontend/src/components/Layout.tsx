@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon, Dropdown, Avatar, Button } from "antd";
+import { Layout, Menu, Icon, Dropdown, Avatar } from "antd";
 
 const { Content, Footer, Sider, Header } = Layout;
 const { SubMenu } = Menu;
@@ -16,7 +16,7 @@ interface IAppLayout {
 
 const AppLayout: React.FunctionComponent<IAppLayout> = ({ children, me }) => {
   return (
-    <Layout>
+    <Layout style={{ minHeight: "100vh" }}>
       <Header style={{ display: "flex", background: "#fff" }}>
         <h1>Spotify Playlist Generator</h1>
         <nav style={{ marginLeft: "auto" }}>
