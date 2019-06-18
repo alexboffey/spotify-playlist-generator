@@ -1,4 +1,4 @@
-import gql from "graphql-tag"
+import gql from "graphql-tag";
 
 export const USER_QUERY = gql`
   query {
@@ -7,6 +7,9 @@ export const USER_QUERY = gql`
       name
       email
       spotifyId
+      images {
+        url
+      }
     }
   }
 `;
@@ -17,5 +20,6 @@ export interface IUserQuery {
     name: string;
     email: string;
     spotifyId: string;
+    images: Array<{ url: string }>;
   };
 }

@@ -6,6 +6,14 @@ enum TimeRange {
   short_term
 }
 
+type User {
+  id: String!
+  name: String!
+  email: String!
+  spotifyId: String!
+  images: [Image]
+}
+
 type Query {
   me: User
   myTopTracks(limit: Int, offset: Int, time_range: TimeRange): MyTopTracks

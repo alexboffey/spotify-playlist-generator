@@ -6,9 +6,9 @@ import apollo from "./lib/createApolloClient";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import { USER_QUERY, IUserQuery } from "./graphql/userQuery";
-import { message, Button } from "antd";
+import { message } from "antd";
 
-const App: React.FC = () => {
+const App: React.FunctionComponent = () => {
   return (
     <ApolloProvider client={apollo}>
       <Query<IUserQuery> query={USER_QUERY}>
@@ -18,14 +18,8 @@ const App: React.FC = () => {
           if (data && !data.me) return <Login />;
           if (data && data.me) {
             return (
-              <Layout>
-                <h1>Hey there {data.me.name}</h1>
-
-                <a href="/auth/logout">
-                  <Button type="ghost" icon="user">
-                    Sign out
-                  </Button>
-                </a>
+              <Layout me={data.me}>
+                <p>Something meaningful...</p>
               </Layout>
             );
           }

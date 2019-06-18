@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card } from "antd";
 
-const Login: React.FC = () => {
+const Login: React.FunctionComponent = () => {
   return (
     <Card style={{ width: 400, margin: "0 auto" }}>
       <header>
@@ -10,7 +10,7 @@ const Login: React.FC = () => {
       <p>Please sign in to continue</p>
       <footer>
         <a href="/auth/spotify">
-          <Button type="primary" icon="user">
+          <Button type="primary" icon="login">
             Sign In with Spotify
           </Button>
         </a>
