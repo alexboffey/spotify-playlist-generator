@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { List, Avatar, Button } from "antd";
 
-interface ITrack {
-  id: string;
-  name: string;
-  preview_url?: string;
-  artists: Array<{ id: string; name: string }>;
-  album: { id: string; name: string; images: Array<{ url: string }> };
-}
-
 interface IPlayer {
   audio: {
     play: () => void;
@@ -38,6 +30,14 @@ const Player: React.FunctionComponent<IPlayer> = ({ audio }) => {
     </Button>
   );
 };
+
+interface ITrack {
+  id: string;
+  name: string;
+  preview_url?: string;
+  artists: Array<{ id: string; name: string }>;
+  album: { id: string; name: string; images: Array<{ url: string }> };
+}
 
 const Track: React.FunctionComponent<ITrack> = ({
   name,
