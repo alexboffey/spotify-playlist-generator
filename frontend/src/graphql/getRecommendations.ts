@@ -13,6 +13,9 @@ export const GET_RECOMMENDATIONS_QUERY = gql`
         album {
           id
           name
+          images {
+            url
+          }
         }
       }
     }
@@ -24,8 +27,8 @@ export interface IGetRecommendationsQuery {
     tracks: Array<{
       id: string;
       name: string;
-      artists: { id: string; name: string };
-      album: { id: string; name: string };
+      artists: Array<{ id: string; name: string }>;
+      album: { id: string; name: string; images: Array<{ url: string }> };
     }>;
   };
 }
