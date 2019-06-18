@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Query } from "react-apollo";
-import { Spin, message, List, Divider, Avatar, Button } from "antd";
+import { Spin, message, List, Divider, Button } from "antd";
 import { shuffle } from "lodash";
 
 import {
@@ -11,27 +11,7 @@ import {
   GET_RECOMMENDATIONS_QUERY,
   IGetRecommendationsQuery
 } from "../graphql/getRecommendations";
-
-interface ITrack {
-  id: string;
-  name: string;
-  artists: Array<{ id: string; name: string }>;
-  album: { id: string; name: string; images: Array<{ url: string }> };
-}
-
-const Track: React.FunctionComponent<ITrack> = ({ name, artists, album }) => {
-  return (
-    <List.Item>
-      <List.Item.Meta
-        avatar={
-          <Avatar shape="square" size="large" src={album.images[0].url} />
-        }
-        title={<span>{name}</span>}
-        description={artists.map(({ name }) => name).join(", ")}
-      />
-    </List.Item>
-  );
-};
+import Track from "./Track";
 
 const Playlist: React.FunctionComponent = () => {
   return (
@@ -39,20 +19,9 @@ const Playlist: React.FunctionComponent = () => {
       <header
         style={{ display: "flex", alignItems: "center", marginTop: ".5rem" }}
       >
-        <h2 style={{ margin: 0 }}>
-          This playlist was generated from your top 5 spotify artists
-        </h2>
-        <Button
-          disabled
-          type="ghost"
-          icon="reload"
-          style={{ marginLeft: "auto" }}
-        >
-          Regenerate
-        </Button>
+        <h2 style={{ margin: 0 }}>Playlist</h2>
       </header>
       <Divider />
-
       <Query<IMyTopArtistsQuery>
         query={MY_TOP_ARTISTS_QUERY}
         variables={{ limit: 40 }}
@@ -82,6 +51,7 @@ const Playlist: React.FunctionComponent = () => {
                           type="ghost"
                           onClick={() => refetch()}
                           icon="reload"
+                          style={{ marginBottom: "1rem" }}
                         >
                           Regenerate
                         </Button>
