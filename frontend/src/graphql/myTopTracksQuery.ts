@@ -1,8 +1,11 @@
 import gql from "graphql-tag";
 
 export const MY_TOP_TRACKS_QUERY = gql`
-  query {
-    myTopTracks(limit: 5, time_range: short_term) {
+  query MY_TOP_TRACKS_QUERY(
+    $limit: Int = 20
+    $time_range: TimeRange = long_term
+  ) {
+    myTopTracks(limit: $limit, time_range: $time_range) {
       items {
         name
         id

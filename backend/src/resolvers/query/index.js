@@ -3,5 +3,6 @@ module.exports = {
   myTopTracks: require("./myTopTracks"),
   myTopArtists: require("./myTopArtists"),
   getRecommendations: require("./getRecommendations"),
-  generatePlaylist: require("./generatePlaylist")
+  generatePlaylist: require("./generatePlaylist"),
+  search: require("./search")
 };

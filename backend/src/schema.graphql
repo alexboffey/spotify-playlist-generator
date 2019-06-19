@@ -6,6 +6,11 @@ enum TimeRange {
   short_term
 }
 
+enum SearchType {
+  artist
+  track
+}
+
 type User {
   id: String!
   name: String!
@@ -16,8 +21,8 @@ type User {
 
 type Query {
   me: User
-  myTopTracks(limit: Int, offset: Int, time_range: TimeRange): MyTopTracks
-  myTopArtists(limit: Int, offset: Int, time_range: TimeRange): MyTopArtists
+  myTopTracks(limit: Int, offset: Int, time_range: TimeRange!): Tracks
+  myTopArtists(limit: Int, offset: Int, time_range: TimeRange!): Artists
   getRecommendations(
     limit: Int
     seed_artists: String
@@ -25,25 +30,23 @@ type Query {
     seed_genres: String
   ): Recommendations
   generatePlaylist(seeds: String): Recommendations
+  search(query: String!, type: SearchType!, limit: Int): Search
 }
 
 # type Mutation {}
+
+type Search {
+  artists: Artists
+  tracks: Tracks
+  albums: Albums
+}
 
 type Recommendations {
   tracks: [Track]
   seeds: [Seed]
 }
 
-type MyTopTracks {
-  items: [Track]!
-  next: String
-  previous: String
-  total: Int!
-  limit: Int!
-  href: String!
-}
-
-type MyTopArtists {
+type Artists {
   items: [Artist]
   next: String
   previous: String
@@ -69,6 +72,15 @@ type Followers {
   total: Int
 }
 
+type Albums {
+  items: [Album]
+  next: String
+  previous: String
+  total: Int!
+  limit: Int!
+  href: String!
+}
+
 type Album {
   id: String!
   href: String!
@@ -81,6 +93,15 @@ type Album {
   artists: [Artist]!
   external_urls: ExternalUrls
   images: [Image]
+}
+
+type Tracks {
+  items: [Track]
+  next: String
+  previous: String
+  total: Int!
+  limit: Int!
+  href: String!
 }
 
 type Track {
