@@ -23,12 +23,13 @@ type Query {
     seed_artists: String
     seed_tracks: String
     seed_genres: String
-  ): GetRecommendations
+  ): Recommendations
+  generatePlaylist(seeds: String): Recommendations
 }
 
 # type Mutation {}
 
-type GetRecommendations {
+type Recommendations {
   tracks: [Track]
   seeds: [Seed]
 }
