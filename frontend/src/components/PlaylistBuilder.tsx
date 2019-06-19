@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Layout from "./Layout";
 import Playlist from "./Playlist";
@@ -15,13 +15,13 @@ interface IPlaylistBuilder {
 }
 
 const PlaylistBuilder: React.FunctionComponent<IPlaylistBuilder> = ({ me }) => {
+  const [activeMenuKey, setActiveMenuKey] = useState("playlist");
+
   return (
     <Layout
       me={me}
-      sidebar={setActiveMenuKey => (
-        <Sidebar setActiveMenuKey={setActiveMenuKey} />
-      )}
-      content={activeMenuKey => {
+      sidebar={() => <Sidebar setActiveMenuKey={setActiveMenuKey} />}
+      content={() => {
         if (activeMenuKey === "playlist") return <Playlist />;
         if (activeMenuKey === "seeds") return <p>Seeds</p>;
         if (activeMenuKey === "audio_features") return <p>Audio Features</p>;
