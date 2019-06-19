@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 
 import Layout from "./Layout";
-import Playlist from "./Playlist";
+import SimpleRouter from "./SimpleRouter";
 import Sidebar from "./Sidebar";
+import Playlist from "./Playlist";
+import Seeds from "./Seeds";
+import AudioFeatures from "./AudioFeatures";
 
 interface IPlaylistBuilder {
   me: {
@@ -21,12 +24,16 @@ const PlaylistBuilder: React.FunctionComponent<IPlaylistBuilder> = ({ me }) => {
     <Layout
       me={me}
       sidebar={() => <Sidebar setActiveMenuKey={setActiveMenuKey} />}
-      content={() => {
-        if (activeMenuKey === "playlist") return <Playlist />;
-        if (activeMenuKey === "seeds") return <p>Seeds</p>;
-        if (activeMenuKey === "audio_features") return <p>Audio Features</p>;
-        return <p>Unexpected Menu Key</p>;
-      }}
+      content={() => (
+        <SimpleRouter
+          activeMenuKey={activeMenuKey}
+          routes={[
+            { key: "playlist", component: <Playlist /> },
+            { key: "seeds", component: <Seeds /> },
+            { key: "audio_features", component: <AudioFeatures /> }
+          ]}
+        />
+      )}
     />
   );
 };

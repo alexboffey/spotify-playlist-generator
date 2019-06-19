@@ -1,23 +1,18 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { Spin, message, List, Divider, Button } from "antd";
+import { Spin, message, List, Button } from "antd";
 
-import Track from "./Track";
 import {
   GENERATE_PLAYLIST_QUERY,
   IGeneratePlaylistQuery
 } from "../graphql/generatePlaylist";
+import Track from "./Track";
+import Header from "./Header";
 
 const Playlist: React.FunctionComponent = () => {
   return (
-    <div>
-      <header
-        style={{ display: "flex", alignItems: "center", marginTop: ".5rem" }}
-      >
-        <h2 style={{ margin: 0 }}>Playlist</h2>
-      </header>
-      <Divider />
-
+    <React.Fragment>
+      <Header title="Playlist" />
       <Query<IGeneratePlaylistQuery> query={GENERATE_PLAYLIST_QUERY}>
         {({ data, loading, error, refetch }) => {
           if (loading) return <Spin />;
@@ -43,7 +38,7 @@ const Playlist: React.FunctionComponent = () => {
           }
         }}
       </Query>
-    </div>
+    </React.Fragment>
   );
 };
 
