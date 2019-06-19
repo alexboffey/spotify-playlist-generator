@@ -16,6 +16,14 @@ export const SEARCH_ARTISTS_QUERY = gql`
   }
 `;
 
+export interface ISearchArtistsQuery {
+  search: {
+    artists: {
+      items: Array<{ name: string }>;
+    };
+  };
+}
+
 export const SEARCH_TRACKS_QUERY = gql`
   query SEARCH_ARTISTS_QUERY(
     $query: String!
@@ -32,7 +40,10 @@ export const SEARCH_TRACKS_QUERY = gql`
   }
 `;
 
-export interface ISearchQuery {
-  search: string;
-  type: string;
+export interface ISearchTracksQuery {
+  search: {
+    tracks: {
+      items: Array<{ name: string }>;
+    };
+  };
 }

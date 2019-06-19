@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Menu, Icon, Dropdown, Avatar } from "antd";
 
-const { Content, Footer, Sider, Header } = Layout;
+const { Content, Footer, Header } = Layout;
 
 interface IAppLayout {
   me: {
