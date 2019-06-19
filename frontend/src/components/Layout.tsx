@@ -11,10 +11,15 @@ interface IAppLayout {
     spotifyId: string;
     images: Array<{ url: string }>;
   };
-  render: (activeMenuKey: string) => any;
+  content: (activeMenuKey: string) => any;
+  sidebar: (setActiveMenuKey: (key: string) => void) => any;
 }
 
-const AppLayout: React.FunctionComponent<IAppLayout> = ({ render, me }) => {
+const AppLayout: React.FunctionComponent<IAppLayout> = ({
+  content,
+  sidebar,
+  me
+}) => {
   const [activeMenuKey, setActiveMenuKey] = useState("playlist");
 
   return (
@@ -64,29 +69,9 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ render, me }) => {
 
       <Content style={{ padding: "0 50px", marginTop: "24px" }}>
         <Layout style={{ padding: "24px 0", background: "#fff" }}>
-          <Sider style={{ background: "#fff" }}>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={["playlist"]}
-              style={{ height: "100%" }}
-              onClick={({ key }) => setActiveMenuKey(key)}
-            >
-              <Menu.Item key="playlist">
-                <Icon type="unordered-list" />
-                &nbsp;Playlist
-              </Menu.Item>
-              <Menu.Item key="seeds">
-                <Icon type="build" />
-                &nbsp;Seeds
-              </Menu.Item>
-              <Menu.Item key="audio_features">
-                <Icon type="sound" />
-                &nbsp;Audio Features
-              </Menu.Item>
-            </Menu>
-          </Sider>
+          {sidebar(setActiveMenuKey)}
           <Content style={{ padding: "0 24px", minHeight: 280 }}>
-            {render(activeMenuKey)}
+            {content(activeMenuKey)}
           </Content>
         </Layout>
       </Content>

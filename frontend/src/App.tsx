@@ -6,9 +6,8 @@ import "antd/dist/antd.min.css";
 import apollo from "./lib/createApolloClient";
 import { USER_QUERY, IUserQuery } from "./graphql/userQuery";
 import Login from "./components/Login";
-import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
-import Playlist from "./components/Playlist";
+import PlaylistBuilder from "./components/PlaylistBuilder";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -18,19 +17,7 @@ const App: React.FunctionComponent = () => {
           if (loading) return <LoadingScreen />;
           if (error) return message.error(error);
           if (data && !data.me) return <Login />;
-          if (data && data.me) {
-            return (
-              <Layout
-                me={data.me}
-                render={activeMenuKey => {
-                  if (activeMenuKey === "playlist") return <Playlist />;
-                  if (activeMenuKey === "seeds") return <p>Seeds</p>;
-                  if (activeMenuKey === "audio_features") return <p>Audio Features</p>;
-                  return <p>Unexpected Menu Key</p>
-                }}
-              />
-            );
-          }
+          if (data && data.me) return <PlaylistBuilder me={data.me} />;
         }}
       </Query>
     </ApolloProvider>
