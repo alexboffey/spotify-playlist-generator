@@ -51,7 +51,13 @@ const Track: React.FunctionComponent<ITrack> = ({
     <List.Item>
       <List.Item.Meta
         avatar={
-          <Avatar shape="square" size="large" src={album.images[0].url} />
+          <Avatar
+            shape="square"
+            size="large"
+            src={album.images[0] ? album.images[0].url : ""}
+          >
+            {name.split("")[0]}
+          </Avatar>
         }
         title={<span>{name}</span>}
         description={artists.map(({ name }) => name).join(", ")}

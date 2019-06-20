@@ -65,6 +65,7 @@ type Artist {
   external_urls: ExternalUrls
   images: [Image]
   followers: Followers
+  genres: [String]
 }
 
 type Followers {

@@ -9,7 +9,13 @@ export const SEARCH_ARTISTS_QUERY = gql`
     search(query: $query, type: $type, limit: $limit) {
       artists {
         items {
+          id
           name
+          type
+          images {
+            url
+          }
+          genres
         }
       }
     }
@@ -19,7 +25,12 @@ export const SEARCH_ARTISTS_QUERY = gql`
 export interface ISearchArtistsQuery {
   search: {
     artists: {
-      items: Array<{ name: string }>;
+      items: Array<{
+        id: string;
+        name: string;
+        images: Array<{ url: string }>;
+        genres: Array<string>;
+      }>;
     };
   };
 }

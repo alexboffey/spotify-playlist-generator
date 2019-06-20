@@ -11,7 +11,5 @@ module.exports = async function(parent, args, ctx, info) {
     }
   );
 
-  console.log(JSON.stringify(body, null, 2));
-
   return body;
 };
