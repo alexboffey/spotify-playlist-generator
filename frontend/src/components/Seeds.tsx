@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { ApolloConsumer } from "react-apollo";
-import { Form, Input, List, Avatar, Button, Row, Col, Empty } from "antd";
+import {
+  Form,
+  Input,
+  List,
+  Avatar,
+  Button,
+  Row,
+  Col,
+  Empty,
+  message
+} from "antd";
 import { startCase } from "lodash";
 
 import Header from "./Header";
@@ -70,6 +80,16 @@ const Seeds: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                     />
                     <Button
                       onClick={() => {
+                        if (seeds.length === 5)
+                          return message.warning(
+                            "Maximum of 5 seeds is allowed. Please remove seeds before adding more."
+                          );
+
+                        if (seeds.map(({ id: seedId }) => seedId).includes(id))
+                          return message.warning(
+                            `${name} has already been added as a seed. Please select a different seed.`
+                          );
+
                         setSeeds([
                           ...seeds,
                           { id, name, images, genres, type }

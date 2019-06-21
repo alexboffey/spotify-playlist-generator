@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { Spin, message, List, Button } from "antd";
+import { Spin, message, List, Button, Tag } from "antd";
 
 import {
   GENERATE_PLAYLIST_QUERY,
@@ -12,9 +12,10 @@ import { IArtist } from "../interfaces";
 
 interface IProps {
   seeds: Array<IArtist>;
+  setSeeds: (seeds: Array<IArtist>) => void;
 }
 
-const Playlist: React.FunctionComponent<IProps> = ({ seeds }) => {
+const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
@@ -30,14 +31,50 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds }) => {
           if (data) {
             return (
               <React.Fragment>
-                <Button
-                  type="ghost"
-                  onClick={() => refetch()}
-                  icon="reload"
-                  style={{ marginBottom: "1rem" }}
+                <div
+                  className="playlist-controls"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "1rem"
+                  }}
                 >
-                  Regenerate
-                </Button>
+                  {seeds.length > 0 && (
+                    <div
+                      className="playlist-controls__seeds"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: "auto"
+                      }}
+                    >
+                      {seeds.map(({ name, id }) => (
+                        <Tag
+                          color="geekblue"
+                          closable
+                          onClose={() => {
+                            setSeeds(
+                              seeds.filter(({ id: seedId }) => seedId !== id)
+                            );
+                            refetch();
+                          }}
+                        >
+                          {name}
+                        </Tag>
+                      ))}
+                    </div>
+                  )}
+
+                  <Button
+                    type="ghost"
+                    onClick={() => refetch()}
+                    icon="reload"
+                    style={{ marginBottom: 0 }}
+                  >
+                    Regenerate
+                  </Button>
+                </div>
+
                 <List>
                   {data.generatePlaylist.tracks.map(track => (
                     <Track key={track.id} {...track} />

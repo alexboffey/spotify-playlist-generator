@@ -23,7 +23,10 @@ const PlaylistBuilder: React.FunctionComponent<IProps> = ({ me }) => {
         <SimpleRouter
           activeMenuKey={activeMenuKey}
           routes={[
-            { key: "playlist", component: <Playlist seeds={seeds} /> },
+            {
+              key: "playlist",
+              component: <Playlist seeds={seeds} setSeeds={setSeeds} />
+            },
             {
               key: "seeds",
               component: <Seeds seeds={seeds} setSeeds={setSeeds} />
