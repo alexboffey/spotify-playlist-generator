@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin, Icon, Layout } from "antd";
+import { Spin, Layout } from "antd";
 
 const LoadingScreen: React.FunctionComponent = () => (
   <Layout
@@ -10,7 +10,6 @@ const LoadingScreen: React.FunctionComponent = () => (
     <Spin
       style={{ margin: "auto" }}
       size="large"
-      indicator={<Icon type="loading" spin />}
     />
   </Layout>
 );

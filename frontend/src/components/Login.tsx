@@ -6,9 +6,9 @@ const Login: React.FunctionComponent = () => {
     <Layout style={{ minHeight: "100vh" }}>
       <Card style={{ width: 400, margin: "5rem auto" }}>
         <header>
-          <h1>Spotify Playlist Generator</h1>
+          <h1>Spotify Toolkit</h1>
         </header>
-        <p>Generate spotify playlists on the fly based on your listening history, artist, track or genre seeds and Spotify's audio properties.</p>
+        <p>Generate playlists on the fly from your listening history .</p>
         <footer>
           <a href="/auth/spotify">
             <Button type="primary" icon="user">

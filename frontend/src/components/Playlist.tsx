@@ -24,6 +24,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
       <Query<IGeneratePlaylistQuery>
         query={GENERATE_PLAYLIST_QUERY}
         variables={{ seeds: formattedSeeds }}
+        notifyOnNetworkStatusChange
       >
         {({ data, loading, error, refetch }) => {
           if (error) {
@@ -78,15 +79,13 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                 </Button>
               </div>
 
-              {loading && <Spin indicator={<Icon type="loading" spin />} />}
-
-              {data && !loading && (
-                <List>
-                  {data.generatePlaylist.tracks.map(track => (
+              <List loading={loading}>
+                {data &&
+                  !loading &&
+                  data.generatePlaylist.tracks.map(track => (
                     <Track key={track.id} {...track} />
                   ))}
-                </List>
-              )}
+              </List>
             </React.Fragment>
           );
         }}
