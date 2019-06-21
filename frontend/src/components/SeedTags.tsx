@@ -18,6 +18,7 @@ const SeedTags: React.FunctionComponent<IProps> = ({
     <React.Fragment>
       {seeds.map(({ name, id }) => (
         <Tag
+          key={id}
           color="blue"
           closable
           onClose={() => {

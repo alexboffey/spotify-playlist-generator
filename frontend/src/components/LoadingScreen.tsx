@@ -9,7 +9,6 @@ const LoadingScreen: React.FunctionComponent = () => (
   >
     <Spin
       style={{ margin: "auto" }}
-      size="large"
     />
   </Layout>
 );

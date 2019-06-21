@@ -18,7 +18,7 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
       >
         <Menu.ItemGroup title="Creation">
           <Menu.Item key="playlist">
-            <Icon type="unordered-list" />
+            <Icon type="project" />
             &nbsp;Playlist
           </Menu.Item>
         </Menu.ItemGroup>
