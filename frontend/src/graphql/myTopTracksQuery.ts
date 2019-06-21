@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { ITrack } from "../interfaces";
+
 export const MY_TOP_TRACKS_QUERY = gql`
   query MY_TOP_TRACKS_QUERY(
     $limit: Int = 20
@@ -9,9 +11,14 @@ export const MY_TOP_TRACKS_QUERY = gql`
       items {
         name
         id
-        href
+        artists {
+          name
+        }
         album {
           name
+          images {
+            url
+          }
         }
       }
       next
@@ -25,7 +32,7 @@ export const MY_TOP_TRACKS_QUERY = gql`
 
 export interface IMyTopTracksQuery {
   myTopTracks: {
-    items: Array<{ name: string; id: string; href: string }>;
+    items: Array<ITrack>;
     next: string;
     previous: string;
     total: number;

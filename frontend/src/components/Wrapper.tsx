@@ -5,6 +5,8 @@ import SimpleRouter from "./SimpleRouter";
 import Sidebar from "./Sidebar";
 import Playlist from "./Playlist";
 import { IMe, IArtist } from "../interfaces";
+import TopArtists from "./TopArtists";
+import TopTracks from "./TopTracks"
 
 interface IProps {
   me: IMe;
@@ -25,6 +27,12 @@ const Wrapper: React.FunctionComponent<IProps> = ({ me }) => {
             {
               key: "playlist",
               component: <Playlist seeds={seeds} setSeeds={setSeeds} />
+            }, {
+              key: "artists",
+              component: <TopArtists />
+            }, {
+              key: "tracks",
+              component: <TopTracks />
             }
           ]}
         />

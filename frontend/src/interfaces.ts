@@ -13,3 +13,14 @@ export interface IMe {
   spotifyId: string;
   images: Array<{ url: string }>;
 }
+
+export interface ITrack {
+  name: string;
+  id: string;
+  artists: Array<{ name: string }>;
+  album: {
+    name: string;
+    images: Array<{ url: string }>;
+    id: string;
+  };
+}
