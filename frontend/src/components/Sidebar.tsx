@@ -24,10 +24,6 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
           <Icon type="build" />
           &nbsp;Seeds
         </Menu.Item>
-        <Menu.Item key="audio_features">
-          <Icon type="sound" />
-          &nbsp;Audio Features
-        </Menu.Item>
       </Menu>
     </Sider>
   );

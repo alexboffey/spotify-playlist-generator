@@ -8,12 +8,22 @@ import {
 } from "../graphql/generatePlaylist";
 import Track from "./Track";
 import Header from "./Header";
+import { IArtist } from "../interfaces";
 
-const Playlist: React.FunctionComponent = () => {
+interface IProps {
+  seeds: Array<IArtist>;
+}
+
+const Playlist: React.FunctionComponent<IProps> = ({ seeds }) => {
+  const formattedSeeds = seeds.map(({ id }) => id).join(",");
+
   return (
     <React.Fragment>
       <Header title="Playlist" />
-      <Query<IGeneratePlaylistQuery> query={GENERATE_PLAYLIST_QUERY}>
+      <Query<IGeneratePlaylistQuery>
+        query={GENERATE_PLAYLIST_QUERY}
+        variables={{ seeds: formattedSeeds }}
+      >
         {({ data, loading, error, refetch }) => {
           if (loading) return <Spin />;
           if (error) return message.error(error);

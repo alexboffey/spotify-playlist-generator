@@ -5,7 +5,6 @@ import SimpleRouter from "./SimpleRouter";
 import Sidebar from "./Sidebar";
 import Playlist from "./Playlist";
 import Seeds from "./Seeds";
-import AudioFeatures from "./AudioFeatures";
 import { IMe, IArtist } from "../interfaces";
 
 interface IProps {
@@ -24,12 +23,11 @@ const PlaylistBuilder: React.FunctionComponent<IProps> = ({ me }) => {
         <SimpleRouter
           activeMenuKey={activeMenuKey}
           routes={[
-            { key: "playlist", component: <Playlist /> },
+            { key: "playlist", component: <Playlist seeds={seeds} /> },
             {
               key: "seeds",
               component: <Seeds seeds={seeds} setSeeds={setSeeds} />
-            },
-            { key: "audio_features", component: <AudioFeatures /> }
+            }
           ]}
         />
       )}

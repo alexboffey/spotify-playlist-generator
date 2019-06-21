@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GENERATE_PLAYLIST_QUERY = gql`
-  query {
-    generatePlaylist {
+  query GENERATE_PLAYLIST_QUERY($seeds: String) {
+    generatePlaylist(seeds: $seeds) {
       tracks {
         id
         name
