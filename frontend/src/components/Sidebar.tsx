@@ -16,14 +16,10 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
         style={{ height: "100%" }}
         onClick={({ key }) => setActiveMenuKey(key)}
       >
-        <Menu.ItemGroup title="Playlist Generation">
+        <Menu.ItemGroup title="Creation">
           <Menu.Item key="playlist">
             <Icon type="unordered-list" />
             &nbsp;Playlist
-          </Menu.Item>
-          <Menu.Item key="seeds">
-            <Icon type="control" />
-            &nbsp;Seeds
           </Menu.Item>
         </Menu.ItemGroup>
 
