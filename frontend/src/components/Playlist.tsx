@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { Spin, message, List, Button, Tag } from "antd";
+import { Spin, message, List, Button, Tag, Empty, Icon } from "antd";
 
 import {
   GENERATE_PLAYLIST_QUERY,
@@ -26,63 +26,69 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
         variables={{ seeds: formattedSeeds }}
       >
         {({ data, loading, error, refetch }) => {
-          if (loading) return <Spin />;
-          if (error) return message.error(error);
-          if (data) {
-            return (
-              <React.Fragment>
-                <div
-                  className="playlist-controls"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "1rem"
-                  }}
-                >
-                  {seeds.length > 0 && (
-                    <div
-                      className="playlist-controls__seeds"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight: "auto"
-                      }}
-                    >
-                      {seeds.map(({ name, id }) => (
-                        <Tag
-                          color="geekblue"
-                          closable
-                          onClose={() => {
-                            setSeeds(
-                              seeds.filter(({ id: seedId }) => seedId !== id)
-                            );
-                            refetch();
-                          }}
-                        >
-                          {name}
-                        </Tag>
-                      ))}
-                    </div>
-                  )}
+          if (error) {
+            message.error(error);
+            return <Empty description="Something went wrong..." />;
+          }
 
-                  <Button
-                    type="ghost"
-                    onClick={() => refetch()}
-                    icon="reload"
-                    style={{ marginBottom: 0 }}
+          return (
+            <React.Fragment>
+              <div
+                className="playlist-controls"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "1rem"
+                }}
+              >
+                {seeds.length > 0 && (
+                  <div
+                    className="playlist-controls__seeds"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "auto"
+                    }}
                   >
-                    Regenerate
-                  </Button>
-                </div>
+                    {seeds.map(({ name, id }) => (
+                      <Tag
+                        color="geekblue"
+                        closable
+                        onClose={() => {
+                          setSeeds(
+                            seeds.filter(({ id: seedId }) => seedId !== id)
+                          );
+                          refetch();
+                        }}
+                      >
+                        {name}
+                      </Tag>
+                    ))}
+                  </div>
+                )}
 
+                <Button
+                  type="ghost"
+                  onClick={() => refetch()}
+                  icon="reload"
+                  style={{ marginBottom: 0 }}
+                  disabled={loading}
+                >
+                  Regenerate
+                </Button>
+              </div>
+
+              {loading && <Spin indicator={<Icon type="loading" spin />} />}
+
+              {data && !loading && (
                 <List>
                   {data.generatePlaylist.tracks.map(track => (
                     <Track key={track.id} {...track} />
                   ))}
                 </List>
-              </React.Fragment>
-            );
-          }
+              )}
+            </React.Fragment>
+          );
         }}
       </Query>
     </React.Fragment>

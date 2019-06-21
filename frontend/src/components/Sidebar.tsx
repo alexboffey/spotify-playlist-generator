@@ -22,7 +22,7 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
         </Menu.Item>
         <Menu.Item key="seeds">
           <Icon type="build" />
-          &nbsp;Seeds
+          &nbsp;Add Seeds
         </Menu.Item>
       </Menu>
     </Sider>
