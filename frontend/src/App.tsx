@@ -7,7 +7,7 @@ import apollo from "./lib/createApolloClient";
 import { USER_QUERY, IUserQuery } from "./graphql/userQuery";
 import Login from "./components/Login";
 import LoadingScreen from "./components/LoadingScreen";
-import PlaylistBuilder from "./components/PlaylistBuilder";
+import Wrapper from "./components/Wrapper";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -17,7 +17,7 @@ const App: React.FunctionComponent = () => {
           if (loading) return <LoadingScreen />;
           if (error) return message.error(error);
           if (data && !data.me) return <Login />;
-          if (data && data.me) return <PlaylistBuilder me={data.me} />;
+          if (data && data.me) return <Wrapper me={data.me} />;
         }}
       </Query>
     </ApolloProvider>

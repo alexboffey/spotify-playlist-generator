@@ -23,7 +23,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header style={{ display: "flex", background: "#fff" }}>
-        <h1>Spotify Playlist Generator</h1>
+        <h1>Spotify Toolkit</h1>
         <nav style={{ marginLeft: "auto" }}>
           <Dropdown
             placement="bottomRight"

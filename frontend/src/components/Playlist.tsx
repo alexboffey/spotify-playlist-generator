@@ -52,7 +52,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                   >
                     {seeds.map(({ name, id }) => (
                       <Tag
-                        color="geekblue"
+                        color="blue"
                         closable
                         onClose={() => {
                           setSeeds(

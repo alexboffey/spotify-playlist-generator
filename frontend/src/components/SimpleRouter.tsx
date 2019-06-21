@@ -12,15 +12,14 @@ const SimpleRouter: React.FunctionComponent<ISimpleRouter> = ({
   routes,
   activeMenuKey
 }) => {
-  const currentRoute = routes.filter(({ key }) => key === activeMenuKey)[0]
-    .component;
+  const currentRoute = routes.filter(({ key }) => key === activeMenuKey)[0];
 
   return (
     <React.Fragment>
       {currentRoute ? (
-        currentRoute
+        currentRoute.component
       ) : (
-        <p>No route found for the key: {activeMenuKey}</p>
+        <p>No route found for menu key: {activeMenuKey}</p>
       )}
     </React.Fragment>
   );

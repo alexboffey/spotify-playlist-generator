@@ -11,7 +11,7 @@ interface IProps {
   me: IMe;
 }
 
-const PlaylistBuilder: React.FunctionComponent<IProps> = ({ me }) => {
+const Wrapper: React.FunctionComponent<IProps> = ({ me }) => {
   const [activeMenuKey, setActiveMenuKey] = useState("playlist");
   const [seeds, setSeeds] = useState<Array<IArtist>>([]);
 
@@ -38,4 +38,4 @@ const PlaylistBuilder: React.FunctionComponent<IProps> = ({ me }) => {
   );
 };
 
-export default PlaylistBuilder;
+export default Wrapper;
