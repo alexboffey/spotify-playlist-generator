@@ -1,32 +1,26 @@
 import React, { useState } from "react";
 import { ApolloConsumer } from "react-apollo";
-import { Form, Input, List, Avatar, Button, Row, Col } from "antd";
+import { Form, Input, List, Avatar, Button, Row, Col, Empty } from "antd";
 import { startCase } from "lodash";
 
 import Header from "./Header";
 import { SEARCH_ARTISTS_QUERY, ISearchArtistsQuery } from "../graphql/search";
+import { IArtist } from "../interfaces";
 
-interface IArtistSeed {
-  id: string;
-  name: string;
-  images: Array<{ url: string }>;
-  type: string;
-  genres: Array<string>;
+interface IProps {
+  seeds: Array<IArtist>;
+  setSeeds: (seeds: Array<IArtist>) => void;
 }
 
-const Seeds: React.FunctionComponent = () => {
+const Seeds: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const [searchData, setSearchData] = useState();
-  const [seeds, setSeeds] = useState<Array<IArtistSeed>>([]);
 
   return (
     <React.Fragment>
       <Header title="Seeds" />
 
       <Row gutter={24}>
-        <Col span={12}>
-          <header>
-            <p>Add seeds</p>
-          </header>
+        <Col span={16}>
           <Form>
             <Form.Item>
               <ApolloConsumer>
@@ -52,7 +46,7 @@ const Seeds: React.FunctionComponent = () => {
           {searchData && (
             <List>
               {searchData.search.artists.items.map(
-                ({ id, name, images, type, genres }: IArtistSeed) => (
+                ({ id, name, images, type, genres }: IArtist) => (
                   <List.Item key={id}>
                     <List.Item.Meta
                       avatar={
@@ -67,7 +61,10 @@ const Seeds: React.FunctionComponent = () => {
                       title={name}
                       description={
                         genres.length > 0
-                          ? genres.map(genre => startCase(genre)).join(", ")
+                          ? genres
+                              .slice(0, 3)
+                              .map(genre => startCase(genre))
+                              .join(", ")
                           : "No genres available for this artist"
                       }
                     />
@@ -86,20 +83,14 @@ const Seeds: React.FunctionComponent = () => {
             </List>
           )}
         </Col>
-        <Col span={12}>
-          <header>
-            <p>Seeds</p>
-          </header>
-
+        <Col span={8}>
           {seeds.length > 0 ? (
             <List>
-              {seeds.map(({ id, name, genres, images, type }) => (
+              {seeds.map(({ id, name, images, type }) => (
                 <List.Item key={id}>
                   <List.Item.Meta
                     title={name}
-                    description={genres
-                      .map(genre => startCase(genre))
-                      .join(", ")}
+                    description={startCase(type)}
                     avatar={
                       <Avatar
                         shape="square"
@@ -124,7 +115,7 @@ const Seeds: React.FunctionComponent = () => {
               ))}
             </List>
           ) : (
-            <p>No seeeds added</p>
+            <Empty description="No seeds added" />
           )}
         </Col>
       </Row>

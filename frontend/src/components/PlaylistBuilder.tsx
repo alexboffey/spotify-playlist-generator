@@ -6,19 +6,15 @@ import Sidebar from "./Sidebar";
 import Playlist from "./Playlist";
 import Seeds from "./Seeds";
 import AudioFeatures from "./AudioFeatures";
+import { IMe, IArtist } from "../interfaces";
 
-interface IPlaylistBuilder {
-  me: {
-    id: string;
-    name: string;
-    email: string;
-    spotifyId: string;
-    images: Array<{ url: string }>;
-  };
+interface IProps {
+  me: IMe;
 }
 
-const PlaylistBuilder: React.FunctionComponent<IPlaylistBuilder> = ({ me }) => {
+const PlaylistBuilder: React.FunctionComponent<IProps> = ({ me }) => {
   const [activeMenuKey, setActiveMenuKey] = useState("playlist");
+  const [seeds, setSeeds] = useState<Array<IArtist>>([]);
 
   return (
     <Layout
@@ -29,7 +25,10 @@ const PlaylistBuilder: React.FunctionComponent<IPlaylistBuilder> = ({ me }) => {
           activeMenuKey={activeMenuKey}
           routes={[
             { key: "playlist", component: <Playlist /> },
-            { key: "seeds", component: <Seeds /> },
+            {
+              key: "seeds",
+              component: <Seeds seeds={seeds} setSeeds={setSeeds} />
+            },
             { key: "audio_features", component: <AudioFeatures /> }
           ]}
         />
