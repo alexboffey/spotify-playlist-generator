@@ -30,7 +30,11 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
       visible={visible}
       onCancel={() => setVisible(!visible)}
       footer={[
-        <Button type="primary" onClick={() => setVisible(!visible)}>
+        <Button
+          key="done-button"
+          type="primary"
+          onClick={() => setVisible(!visible)}
+        >
           Done
         </Button>
       ]}
@@ -55,7 +59,7 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
                     });
                     setSearchData(data);
                   }}
-                  placeholder="Maximo Park..."
+                  placeholder={`Artist name...`}
                 />
               )}
             </ApolloConsumer>

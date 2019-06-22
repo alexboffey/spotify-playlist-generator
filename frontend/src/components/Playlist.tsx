@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
-import { message, List, Button, Tag, Empty, Icon } from "antd";
+import { message, List, Button, Empty } from "antd";
 
 import {
   GENERATE_PLAYLIST_QUERY,
@@ -22,81 +22,76 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
-    <React.Fragment>
-      <Header title="Playlist" />
-      <Query<IGeneratePlaylistQuery>
-        query={GENERATE_PLAYLIST_QUERY}
-        variables={{ seeds: formattedSeeds }}
-        notifyOnNetworkStatusChange
-      >
-        {({ data, loading, error, refetch }) => {
-          if (error) {
-            message.error(error);
-            return <Empty description="Something went wrong..." />;
-          }
+    <Query<IGeneratePlaylistQuery>
+      query={GENERATE_PLAYLIST_QUERY}
+      variables={{ seeds: formattedSeeds }}
+      notifyOnNetworkStatusChange
+    >
+      {({ data, loading, error, refetch }) => {
+        if (error) {
+          message.error(error);
+          return <Empty description="Something went wrong..." />;
+        }
 
-          return (
-            <React.Fragment>
+        return (
+          <React.Fragment>
+            <Header title="Playlist" />
+            <div
+              className="playlist-controls"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "1rem"
+              }}
+            >
               <div
-                className="playlist-controls"
+                className="playlist-controls__seeds"
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginBottom: "1rem"
+                  marginRight: "auto"
                 }}
               >
-                <div
-                  className="playlist-controls__seeds"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginRight: "auto"
-                  }}
-                >
-                  <Button
-                    icon="plus"
-                    onClick={() => setVisible(!visible)}
-                    style={{ marginRight: "1rem" }}
-                  >
-                    Add Seeds
-                  </Button>
-                  <SeedsModal
-                    visible={visible}
-                    setVisible={setVisible}
-                    seeds={seeds}
-                    setSeeds={setSeeds}
-                    refetch={refetch}
-                  />
-
-                  <SeedTags
-                    seeds={seeds}
-                    setSeeds={setSeeds}
-                    refetch={refetch}
-                  />
-                </div>
-
                 <Button
-                  type="ghost"
-                  onClick={() => refetch()}
-                  icon="reload"
+                  icon="plus"
+                  onClick={() => setVisible(!visible)}
+                  style={{ marginRight: "1rem" }}
                   disabled={loading}
                 >
-                  Regenerate
+                  Add Seeds
                 </Button>
+                <SeedsModal
+                  visible={visible}
+                  setVisible={setVisible}
+                  seeds={seeds}
+                  setSeeds={setSeeds}
+                  refetch={refetch}
+                />
+
+                <SeedTags seeds={seeds} setSeeds={setSeeds} refetch={refetch} />
               </div>
 
-              <List loading={loading}>
-                {data &&
-                  !loading &&
-                  data.generatePlaylist.tracks.map(track => (
-                    <Track key={track.id} {...track} />
-                  ))}
-              </List>
-            </React.Fragment>
-          );
-        }}
-      </Query>
-    </React.Fragment>
+              <Button
+                type="ghost"
+                onClick={() => refetch()}
+                icon="reload"
+                disabled={loading}
+              >
+                Regenerate
+              </Button>
+            </div>
+
+            <List loading={loading}>
+              {data &&
+                !loading &&
+                data.generatePlaylist.tracks.map(track => (
+                  <Track key={track.id} {...track} />
+                ))}
+            </List>
+          </React.Fragment>
+        );
+      }}
+    </Query>
   );
 };
 

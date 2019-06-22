@@ -15,7 +15,7 @@ const TopTracks: React.FunctionComponent = () => {
   return (
     <Query<IMyTopTracksQuery>
       query={MY_TOP_TRACKS_QUERY}
-      variables={{ limit: 50, time_range: timeRange }}
+      variables={{ limit: 20, time_range: timeRange }}
       notifyOnNetworkStatusChange
     >
       {({ data, loading, error, refetch }) => {
@@ -23,22 +23,30 @@ const TopTracks: React.FunctionComponent = () => {
 
         return (
           <React.Fragment>
-            <Header title="Top Tracks" />
-            <Form>
-              <Form.Item label="Time Range">
-                <Select
-                  defaultValue={initialTimeRange}
-                  onChange={(value: string) => {
-                    setTimeRange(value);
-                    refetch();
-                  }}
-                >
-                  <Select.Option value="short_term">Short Term</Select.Option>
-                  <Select.Option value="medium_term">Medium Term</Select.Option>
-                  <Select.Option value="long_term">Long Term</Select.Option>
-                </Select>
-              </Form.Item>
-            </Form>
+            <Header
+              title="Top Tracks"
+              action={() => (
+                <Form layout="inline">
+                  <Form.Item label="Time Range">
+                    <Select
+                      defaultValue={initialTimeRange}
+                      onChange={(value: string) => {
+                        setTimeRange(value);
+                        refetch();
+                      }}
+                    >
+                      <Select.Option value="short_term">
+                        Short Term
+                      </Select.Option>
+                      <Select.Option value="medium_term">
+                        Medium Term
+                      </Select.Option>
+                      <Select.Option value="long_term">Long Term</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Form>
+              )}
+            />
 
             <List loading={loading}>
               {data &&

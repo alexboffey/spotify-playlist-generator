@@ -1,13 +1,19 @@
 import React from "react";
 import { Divider } from "antd";
 
-const Header: React.FunctionComponent<{ title: string }> = ({ title }) => {
+interface IProps {
+  title: string;
+  action?: () => React.ReactElement;
+}
+
+const Header: React.FunctionComponent<IProps> = ({ title, action }) => {
   return (
     <React.Fragment>
       <header
         style={{ display: "flex", alignItems: "center", marginTop: ".5rem" }}
       >
-        <h2 style={{ margin: 0 }}>{title}</h2>
+        <h2 style={{ marginBottom: 0, marginRight: "auto" }}>{title}</h2>
+        {action && action()}
       </header>
       <Divider />
     </React.Fragment>

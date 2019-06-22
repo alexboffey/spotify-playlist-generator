@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon, Divider } from "antd";
+import { Layout, Menu, Icon } from "antd";
 
 const { Sider } = Layout;
 
@@ -32,10 +32,10 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
             <Icon type="sound" />
             &nbsp;Tracks
           </Menu.Item>
-          <Menu.Item key="audio-features">
+          {/* <Menu.Item key="audio-features">
             <Icon type="box-plot" />
             &nbsp;Audio Features
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu.ItemGroup>
       </Menu>
     </Sider>
