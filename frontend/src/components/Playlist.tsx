@@ -11,6 +11,7 @@ import Header from "./Header";
 import SeedsModal from "./SeedsModal";
 import { IArtist } from "../interfaces";
 import SeedTags from "./SeedTags";
+import ExportAsPlaylistModal from "./ExportAsPlaylistModal";
 
 interface IProps {
   seeds: Array<IArtist>;
@@ -18,7 +19,8 @@ interface IProps {
 }
 
 const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
-  const [visible, setVisible] = useState<boolean>(false);
+  const [seedsModalVisible, setSeedsModalVisible] = useState<boolean>(false);
+  const [exportModalVisible, setExportModalVisible] = useState<boolean>(false);
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
@@ -32,6 +34,8 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
           message.error(error);
           return <Empty description="Something went wrong..." />;
         }
+
+        // if (data && data.generatePlaylist) console.log(data);
 
         return (
           <React.Fragment>
@@ -54,15 +58,16 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
               >
                 <Button
                   icon="plus"
-                  onClick={() => setVisible(!visible)}
+                  onClick={() => setSeedsModalVisible(!seedsModalVisible)}
                   style={{ marginRight: "1rem" }}
                   disabled={loading}
+                  title="Add Seeds"
                 >
                   Add Seeds
                 </Button>
                 <SeedsModal
-                  visible={visible}
-                  setVisible={setVisible}
+                  visible={seedsModalVisible}
+                  setVisible={setSeedsModalVisible}
                   seeds={seeds}
                   setSeeds={setSeeds}
                   refetch={refetch}
@@ -76,9 +81,34 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                 onClick={() => refetch()}
                 icon="reload"
                 disabled={loading}
-              >
-                Regenerate
-              </Button>
+                style={{ marginRight: ".5rem" }}
+                title="Regenerate Playlist"
+              />
+
+              <Button
+                type="ghost"
+                icon="export"
+                disabled={loading}
+                style={{ marginRight: ".5rem" }}
+                title="Export as Spotify Playlist"
+                onClick={() => setExportModalVisible(!exportModalVisible)}
+              />
+              <ExportAsPlaylistModal
+                visible={exportModalVisible}
+                setVisible={setExportModalVisible}
+                tracks={
+                  data && !loading
+                    ? data.generatePlaylist.tracks.map(({ uri }) => uri)
+                    : []
+                }
+              />
+
+              <Button
+                type="ghost"
+                icon="save"
+                disabled={loading}
+                title="Save as Template"
+              />
             </div>
 
             <List loading={loading}>

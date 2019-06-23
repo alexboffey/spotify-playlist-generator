@@ -17,6 +17,7 @@ export interface IMe {
 export interface ITrack {
   name: string;
   id: string;
+  uri: string;
   artists: Array<{ name: string }>;
   album: {
     name: string;

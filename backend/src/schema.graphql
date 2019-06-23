@@ -33,7 +33,34 @@ type Query {
   search(query: String!, type: SearchType!, limit: Int): Search
 }
 
-# type Mutation {}
+type Mutation {
+  exportAsPlaylist(playlistName: String, tracks: [String]!): Playlist
+}
+
+type Playlist {
+  collaborative: Boolean
+  description: String
+  external_urls: ExternalUrls
+  followers: Followers
+  href: String
+  id: String
+  images: [Image]
+  name: String
+  owner: PlaylistOwner
+  public: Boolean
+  snapshot_id: String
+  tracks: Tracks
+  type: String
+  uri: String
+}
+
+type PlaylistOwner {
+  external_urls: ExternalUrls
+  href: String
+  id: String
+  type: String
+  uri: String
+}
 
 type Search {
   artists: Artists

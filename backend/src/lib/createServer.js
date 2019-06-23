@@ -8,8 +8,8 @@ module.exports = function() {
   return new GraphQLServer({
     typeDefs: "src/schema.graphql",
     resolvers: {
-      Query
-      // Mutation
+      Query,
+      Mutation
     },
     resolverValidationOptions: {
       requireResolversForResolveType: false
