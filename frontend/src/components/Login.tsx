@@ -8,20 +8,20 @@ const Login: React.FunctionComponent = () => {
         <header>
           <h1>Spotify Toolkit</h1>
         </header>
-        <p>Generate playlists on the fly from your listening history .</p>
+        <p>Use your listening history on Spotify to see your top artists, tracks and generate playlists based on them.</p>
         <footer>
           <a href="/auth/spotify">
             <Button type="primary" icon="user">
               Sign In with Spotify
             </Button>
           </a>
-          <Button
+          {/* <Button
             style={{ marginLeft: ".5rem" }}
             type="ghost"
             icon="info-circle"
           >
             More Info
-          </Button>
+          </Button> */}
         </footer>
       </Card>
     </Layout>

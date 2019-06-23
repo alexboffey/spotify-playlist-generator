@@ -87,7 +87,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
 
               <Button
                 type="ghost"
-                icon="export"
+                icon="save"
                 disabled={loading}
                 style={{ marginRight: ".5rem" }}
                 title="Export as Spotify Playlist"
@@ -103,12 +103,12 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                 }
               />
 
-              <Button
+              {/* <Button
                 type="ghost"
                 icon="save"
                 disabled={loading}
                 title="Save as Template"
-              />
+              /> */}
             </div>
 
             <List loading={loading}>

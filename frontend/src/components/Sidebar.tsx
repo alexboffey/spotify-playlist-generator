@@ -19,18 +19,18 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
         <Menu.ItemGroup title="Creation">
           <Menu.Item key="playlist">
             <Icon type="project" />
-            &nbsp;Playlist
+            &nbsp;Playlist Generator
           </Menu.Item>
         </Menu.ItemGroup>
 
         <Menu.ItemGroup title="Analytics">
           <Menu.Item key="artists">
             <Icon type="idcard" />
-            &nbsp;My Top Artists
+            &nbsp;Top Artists
           </Menu.Item>
           <Menu.Item key="tracks">
             <Icon type="sound" />
-            &nbsp;My Top Tracks
+            &nbsp;Top Tracks
           </Menu.Item>
           {/* <Menu.Item key="audio-features">
             <Icon type="box-plot" />

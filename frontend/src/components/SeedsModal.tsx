@@ -69,9 +69,6 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
         {searchData && (
           <List
             style={{
-              boxShadow: "inset 1px 2px 5px rgba(0,0,0,0.1)",
-              background: "#f5f5f5",
-              borderRadius: "4px",
               maxHeight: "360px",
               overflowY: "scroll"
             }}

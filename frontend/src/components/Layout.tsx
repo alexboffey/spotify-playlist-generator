@@ -29,10 +29,10 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
             placement="bottomRight"
             overlay={() => (
               <Menu style={{ minWidth: 160 }}>
-                <Menu.Item key="0">
+                {/* <Menu.Item key="0">
                   <Icon type="user" /> Profile
                 </Menu.Item>
-                <Menu.Divider />
+                <Menu.Divider /> */}
                 <Menu.Item key="3">
                   <a href="/auth/logout">
                     <Icon type="logout" />
