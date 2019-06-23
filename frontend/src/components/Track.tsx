@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { List, Avatar, Button } from "antd";
+import { reverse } from "lodash";
 
 interface IPlayer {
   audio: {
@@ -54,7 +55,7 @@ const Track: React.FunctionComponent<ITrack> = ({
           <Avatar
             shape="square"
             size="large"
-            src={album.images[0] ? album.images[0].url : ""}
+            src={album.images.length > 0 ? reverse(album.images)[0].url : ""}
           >
             {name.split("")[0]}
           </Avatar>

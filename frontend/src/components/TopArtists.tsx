@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import { Avatar, message, List, Form, Select } from "antd";
-import { startCase } from "lodash";
+import { startCase, reverse } from "lodash";
 
 import Header from "./Header";
 import {
@@ -67,7 +67,7 @@ const TopArtists: React.FunctionComponent = () => {
                         <Avatar
                           shape="square"
                           size="large"
-                          src={images[0] ? images[0].url : ""}
+                          src={images.length > 0 ? reverse(images)[0].url : ""}
                         >
                           {!images[0] && name.split("")[0]}
                         </Avatar>

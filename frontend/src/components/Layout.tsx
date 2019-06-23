@@ -99,6 +99,8 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
             }}
             href="https://alexboffey.co.uk/"
             title="Alex Boffey's Blog"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Alex Boffey
           </a>

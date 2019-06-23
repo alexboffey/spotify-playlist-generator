@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import { Avatar, message, List, Form, Select } from "antd";
+import { reverse } from "lodash";
 
 import Header from "./Header";
 import {
@@ -58,7 +59,11 @@ const TopTracks: React.FunctionComponent = () => {
                         <Avatar
                           shape="square"
                           size="large"
-                          src={album.images[0] ? album.images[0].url : ""}
+                          src={
+                            album.images.length > 0
+                              ? reverse(album.images)[0].url
+                              : ""
+                          }
                         >
                           {name.split("")[0]}
                         </Avatar>

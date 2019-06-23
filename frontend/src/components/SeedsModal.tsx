@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, List, Avatar, Button, message } from "antd";
 import { ApolloConsumer } from "react-apollo";
-import { startCase } from "lodash";
+import { startCase, reverse } from "lodash";
 
 import { SEARCH_ARTISTS_QUERY, ISearchArtistsQuery } from "../graphql/search";
 import { IArtist } from "../interfaces";
@@ -84,7 +84,7 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
                       <Avatar
                         shape="square"
                         size="large"
-                        src={images[0] ? images[0].url : ""}
+                        src={images.length > 0 ? reverse(images)[0].url : ""}
                       >
                         {!images[0] && name.split("")[0]}
                       </Avatar>
