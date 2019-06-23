@@ -9,9 +9,10 @@ import {
 import Track from "./Track";
 import Header from "./Header";
 import SeedsModal from "./SeedsModal";
-import { IArtist } from "../interfaces";
 import SeedTags from "./SeedTags";
 import ExportAsPlaylistModal from "./ExportAsPlaylistModal";
+import SavePlaylistTemplateModal from "./SavePlaylistTemplateModal";
+import { IArtist } from "../interfaces";
 
 interface IProps {
   seeds: Array<IArtist>;
@@ -21,6 +22,7 @@ interface IProps {
 const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const [seedsModalVisible, setSeedsModalVisible] = useState<boolean>(false);
   const [exportModalVisible, setExportModalVisible] = useState<boolean>(false);
+  const [saveModalVisible, setSaveModalVisible] = useState<boolean>(false);
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
@@ -58,7 +60,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
               >
                 <Button
                   icon="plus"
-                  onClick={() => setSeedsModalVisible(!seedsModalVisible)}
+                  onClick={() => setSeedsModalVisible(true)}
                   style={{ marginRight: "1rem" }}
                   disabled={loading}
                   title="Add Seeds"
@@ -91,7 +93,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                 disabled={loading}
                 style={{ marginRight: ".5rem" }}
                 title="Export as Spotify Playlist"
-                onClick={() => setExportModalVisible(!exportModalVisible)}
+                onClick={() => setExportModalVisible(true)}
               />
               <ExportAsPlaylistModal
                 visible={exportModalVisible}
@@ -108,6 +110,11 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                 icon="save"
                 disabled={loading}
                 title="Save as Template"
+                onClick={() => setSaveModalVisible(true)}
+              />
+              <SavePlaylistTemplateModal
+                visible={saveModalVisible}
+                setVisible={setSaveModalVisible}
               />
             </div>
 
