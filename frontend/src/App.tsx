@@ -1,7 +1,8 @@
 import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import { message } from "antd";
-import "antd/dist/antd.min.css";
+import "antd/dist/antd.less";
+import "./style/style.css"
 
 import apollo from "./lib/createApolloClient";
 import { USER_QUERY, IUserQuery } from "./graphql/userQuery";

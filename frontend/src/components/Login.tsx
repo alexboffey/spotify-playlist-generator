@@ -3,8 +3,8 @@ import { Button, Card, Layout } from "antd";
 
 const Login: React.FunctionComponent = () => {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Card style={{ width: 400, margin: "5rem auto" }}>
+    <Layout style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Card style={{ width: 400, marginTop: -200, borderTop: "3px solid #722ed1" }}>
         <header>
           <h1>Spotify Toolkit</h1>
         </header>

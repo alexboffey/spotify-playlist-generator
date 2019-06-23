@@ -19,7 +19,7 @@ const SeedTags: React.FunctionComponent<IProps> = ({
       {seeds.map(({ name, id }) => (
         <Tag
           key={id}
-          color="blue"
+          color="purple"
           closable
           onClose={() => {
             setSeeds(seeds.filter(({ id: seedId }) => seedId !== id));
