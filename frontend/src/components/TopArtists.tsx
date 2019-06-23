@@ -24,7 +24,7 @@ const TopArtists: React.FunctionComponent = () => {
         return (
           <React.Fragment>
             <Header
-              title="Top Artists"
+              title="My Top Artists"
               action={() => (
                 <Form layout="inline">
                   <Form.Item label="Time Range">

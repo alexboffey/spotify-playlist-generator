@@ -26,11 +26,11 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
         <Menu.ItemGroup title="Analytics">
           <Menu.Item key="artists">
             <Icon type="idcard" />
-            &nbsp;Artists
+            &nbsp;My Top Artists
           </Menu.Item>
           <Menu.Item key="tracks">
             <Icon type="sound" />
-            &nbsp;Tracks
+            &nbsp;My Top Tracks
           </Menu.Item>
           {/* <Menu.Item key="audio-features">
             <Icon type="box-plot" />
