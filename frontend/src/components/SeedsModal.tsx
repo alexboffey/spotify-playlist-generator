@@ -45,7 +45,7 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
 
       <div>
         <Form>
-          <Form.Item label="Search for artists">
+          <Form.Item label="Search for an artist">
             <ApolloConsumer>
               {client => (
                 <Input.Search
@@ -91,17 +91,30 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
                     }
                     title={name}
                     description={
-                      genres.length > 0
-                        ? genres
-                            .slice(0, 3)
-                            .map(genre => startCase(genre))
-                            .join(", ")
-                        : "No genres available for this artist"
+                      <span
+                        style={{
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "330px",
+                          overflow: "hidden",
+                          display: "block"
+                        }}
+                      >
+                        {genres.length > 0
+                          ? genres
+                              .slice(0, 3)
+                              .map(genre => startCase(genre))
+                              .join(", ")
+                          : "No genres available for this artist"}
+                      </span>
                     }
                   />
                   {seeds.map(({ id }) => id).includes(id) ? (
                     <Button
                       icon="minus"
+                      style={{
+                        marginLeft: "1rem"
+                      }}
                       onClick={() => {
                         setSeeds(
                           seeds.filter(({ id: seedId }) => seedId !== id)

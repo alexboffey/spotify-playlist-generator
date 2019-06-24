@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Card, Layout, Icon } from "antd";
+import { Button, Card, Layout, Typography } from "antd";
+
+const { Title } = Typography;
 
 const Login: React.FunctionComponent = () => {
   return (
@@ -16,17 +18,15 @@ const Login: React.FunctionComponent = () => {
         style={{ width: 400, marginTop: -200, borderTop: "3px solid #722ed1" }}
       >
         <header>
-          <h1>
-            Spotify Toolkit
-          </h1>
+          <Title>Spotify Toolkit</Title>
         </header>
-        <p>
-          Use your listening history on Spotify to see your top artists, tracks
+        <p className="lead">
+          Use your listening history from Spotify to see your top artists, tracks
           and generate playlists based on them.
         </p>
         <footer>
           <a href="/auth/spotify">
-            <Button type="primary" icon="user">
+            <Button size="large" type="primary" icon="user">
               Sign In with Spotify
             </Button>
           </a>
