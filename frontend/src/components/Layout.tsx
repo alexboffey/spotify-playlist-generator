@@ -26,18 +26,12 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
     <Layout style={{ minHeight: "100vh" }} className={className}>
       <Header style={{ background: "#fff", padding: "0 2rem" }}>
         <div style={{ display: "flex", maxWidth: "1360px" }}>
-          <h1>
-            Spotify Toolkit
-          </h1>
+          <h1>Spotify Toolkit</h1>
           <nav style={{ marginLeft: "auto" }}>
             <Dropdown
               placement="bottomRight"
               overlay={() => (
                 <Menu style={{ minWidth: 160 }}>
-                  {/* <Menu.Item key="0">
-                  <Icon type="user" /> Profile
-                </Menu.Item>
-                <Menu.Divider /> */}
                   <Menu.Item key="3">
                     <a href="/auth/logout">
                       <Icon type="logout" />
@@ -75,7 +69,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
         style={{
           padding: "0 2rem",
           marginTop: "1.5rem",
-          marginBottom: "1.5rem"
+          marginBottom: "3rem"
         }}
       >
         <Layout

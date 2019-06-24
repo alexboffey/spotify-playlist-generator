@@ -32,10 +32,6 @@ const Sidebar: React.FunctionComponent<ISidebar> = ({ setActiveMenuKey }) => {
             <Icon type="sound" />
             &nbsp;Top Tracks
           </Menu.Item>
-          {/* <Menu.Item key="audio-features">
-            <Icon type="box-plot" />
-            &nbsp;Audio Features
-          </Menu.Item> */}
         </Menu.ItemGroup>
       </Menu>
     </Sider>
