@@ -68,7 +68,7 @@ const TopTracks: React.FunctionComponent = () => {
                           {name.split("")[0]}
                         </Avatar>
                       }
-                      title={<span>{name}</span>}
+                      title={name}
                       description={artists.map(({ name }) => name).join(", ")}
                     />
                   </List.Item>
