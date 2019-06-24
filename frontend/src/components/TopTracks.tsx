@@ -20,13 +20,13 @@ const TopTracks: React.FunctionComponent = () => {
       notifyOnNetworkStatusChange
     >
       {({ data, loading, error, refetch }) => {
-        if (error) return message.error(error);
+        if (error) message.error(error);
 
         return (
           <React.Fragment>
             <Header
               title="Top Tracks"
-              action={() => (
+              action={
                 <Form layout="inline">
                   <Form.Item label="Time Range">
                     <Select
@@ -46,7 +46,7 @@ const TopTracks: React.FunctionComponent = () => {
                     </Select>
                   </Form.Item>
                 </Form>
-              )}
+              }
             />
 
             <List loading={loading}>

@@ -18,7 +18,7 @@ export interface ITrack {
   name: string;
   id: string;
   uri: string;
-  artists: Array<{ name: string }>;
+  artists: Array<{ id: string; name: string }>;
   album: {
     name: string;
     images: Array<{ url: string }>;

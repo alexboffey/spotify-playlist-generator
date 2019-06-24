@@ -3,7 +3,7 @@ import { Divider } from "antd";
 
 interface IProps {
   title: string;
-  action?: () => React.ReactElement;
+  action?: React.ReactElement;
 }
 
 const Header: React.FunctionComponent<IProps> = ({ title, action }) => {
@@ -13,7 +13,7 @@ const Header: React.FunctionComponent<IProps> = ({ title, action }) => {
         style={{ display: "flex", alignItems: "center", marginTop: ".5rem" }}
       >
         <h2 style={{ marginBottom: 0, marginRight: "auto" }}>{title}</h2>
-        {action && action()}
+        {action}
       </header>
       <Divider />
     </React.Fragment>

@@ -35,8 +35,6 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
           return <Empty description="Something went wrong..." />;
         }
 
-        // if (data && data.generatePlaylist) console.log(data);
-
         return (
           <React.Fragment>
             <Header title="Playlist" />

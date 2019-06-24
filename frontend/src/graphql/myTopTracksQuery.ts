@@ -12,20 +12,17 @@ export const MY_TOP_TRACKS_QUERY = gql`
         name
         id
         artists {
+          id
           name
         }
         album {
+          id
           name
           images {
             url
           }
         }
       }
-      next
-      previous
-      total
-      limit
-      href
     }
   }
 `;
@@ -33,10 +30,5 @@ export const MY_TOP_TRACKS_QUERY = gql`
 export interface IMyTopTracksQuery {
   myTopTracks: {
     items: Array<ITrack>;
-    next: string;
-    previous: string;
-    total: number;
-    limit: number;
-    href: string;
   };
 }
