@@ -27,7 +27,6 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
       <Header style={{ background: "#fff", padding: "0 2rem" }}>
         <div style={{ display: "flex", maxWidth: "1360px" }}>
           <h1>
-            <Icon type="tool" style={{ marginRight: ".8rem" }} />
             Spotify Toolkit
           </h1>
           <nav style={{ marginLeft: "auto" }}>

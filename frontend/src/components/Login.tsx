@@ -17,7 +17,6 @@ const Login: React.FunctionComponent = () => {
       >
         <header>
           <h1>
-            <Icon type="tool" style={{ marginRight: ".8rem" }} />
             Spotify Toolkit
           </h1>
         </header>
