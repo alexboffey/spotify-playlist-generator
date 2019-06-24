@@ -1,82 +1,95 @@
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 const refresh = require("passport-oauth2-refresh");
-const cookieParser = require("cookie-parser");
+
 const database = require("../services/database");
 const { spotifyApi } = require("../services/spotify");
+const { getMinutesUntilExpiration, getTimeExpires } = require("../lib/time");
 
-const getMinutesUntilExpiration = timeExpires => {
-  const diff = new Date(timeExpires) - new Date();
-  return Math.floor(diff / 1000 / 60);
+/**
+ * Decode JWT to put the userId on each request
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns {void}
+ */
+
+exports.decodeJwt = (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token) {
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    req.userId = userId;
+  }
+
+  next();
 };
 
 /**
- * @param {Object} server
- * @return {void}
+ * Query user from DB and put relevant information on request
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns {void}
  */
 
-module.exports = server => {
-  server.express.use(cookieParser());
+exports.populateUser = async (req, res, next) => {
+  if (!req.userId) return next();
 
-  // Initialise passport
-  server.express.use(passport.initialize());
+  const user = await database.query.user(
+    { where: { id: req.userId } },
+    "{ id, email, name, spotifyId, accessToken, refreshToken, time_expires }"
+  );
 
-  // Decode JWT so we can get userId on each request
-  server.express.use((req, res, next) => {
-    // Get token from request
-    const { token } = req.cookies;
+  if (!spotifyApi.getAccessToken()) {
+    spotifyApi.setAccessToken(user.accessToken);
+  }
 
-    if (token) {
-      const { userId, accessToken, refreshToken, time_expires } = jwt.verify(
-        token,
-        process.env.APP_SECRET
-      );
-      // Put user id and other useful info on to request for subsequent requests to access
-      req.userId = userId;
-      req.accessToken = accessToken;
-      req.refreshToken = refreshToken;
+  req.user = user;
 
-      // Set access token on api wrapper
-      if (!spotifyApi.getAccessToken()) {
+  next();
+};
+
+/**
+ * Update access token if necessary
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns {void}
+ */
+
+exports.updateAccessToken = (req, res, next) => {
+  if (!req.userId) return next();
+
+  // Update access token if necessary
+  if (getMinutesUntilExpiration(req.user.time_expires) < 0) {
+    refresh.requestNewAccessToken(
+      "spotify",
+      req.user.refreshToken,
+      async (err, accessToken) => {
+        if (err) throw new Error(err);
+
+        const time_expires = getTimeExpires();
+
+        // Update user in db
+        await database.mutation.updateUser({
+          data: {
+            accessToken,
+            time_expires
+          },
+          where: { id: req.userId }
+        });
+
+        // Update user details
+        req.user.accessToken = accessToken;
+        req.user.time_expires = time_expires;
+
         spotifyApi.setAccessToken(accessToken);
       }
-
-      // Refresh access token here if necessary
-      if (getMinutesUntilExpiration(time_expires) < 0) {
-        console.log("REQUEST ACCESS TOKEN")
-
-        // MAKE SURE THIS WORKS LOL
-        refresh.requestNewAccessToken(
-          "spotify",
-          refreshToken,
-          (err, accessToken, refreshToken) => {
-            console.log(accessToken, refreshToken)
-
-            if (err) throw new Error(err);
-
-            req.accessToken = accessToken;
-            req.refreshToken = refreshToken;
-
-            // Update access token on api wrapper
-            spotifyApi.setAccessToken(accessToken);
-          }
-        );
-      }
-    }
-
-    next();
-  });
-
-  // Middleware to populate the user on each request
-  server.express.use(async (req, res, next) => {
-    if (!req.userId) return next();
-
-    const user = await database.query.user(
-      { where: { id: req.userId } },
-      "{ id, email, name, spotifyId }"
     );
+  }
 
-    req.user = user;
-    next();
-  });
+  next();
 };

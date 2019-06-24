@@ -3,4 +3,7 @@ type User {
   spotifyId: String!
   name: String!
   email: String! @unique
+  accessToken: String!
+  refreshToken: String!
+  time_expires: DateTime!
 }

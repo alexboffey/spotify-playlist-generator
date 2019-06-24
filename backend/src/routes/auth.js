@@ -1,92 +1,81 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+
 const database = require("../services/database");
-
-// Define spotify authorization scope
-const scope = [
-  "user-read-email",
-  "user-read-private",
-  "user-library-modify",
-  "user-library-read",
-  "playlist-read-private",
-  "playlist-read-collaborative",
-  "playlist-modify-public",
-  "playlist-modify-private",
-  "user-read-recently-played",
-  "user-top-read"
-];
-
-const getTimeExpires = (expires_in = 3600) => {
-  let timeExpires = new Date();
-  // give ourselves a little breathing room before it actually expires
-  timeExpires.setSeconds(timeExpires.getSeconds() + expires_in * 0.9);
-
-  return timeExpires;
-};
+const { getTimeExpires } = require("../lib/time");
 
 /**
- * @param {Object} server
+ * Perform necessary authentication steps
+ *
+ * @param {Object} req
+ * @param {Object} res
  * @returns {void}
  */
 
-module.exports = server => {
-  // Authenticate route
-  server.express.use(
-    "/auth/spotify",
-    passport.authenticate("spotify", { scope, showDialog: true }),
-    async (req, res, next) => {
-      const {
-        id: spotifyId,
-        emails,
-        displayName: name,
+exports.authenticate = async (req, res, next) => {
+  const {
+    id: spotifyId,
+    emails,
+    displayName: name,
+    accessToken,
+    refreshToken
+  } = req.user;
+
+  const email = emails[0].value;
+  const time_expires = getTimeExpires();
+
+  const userExists = await database.query.user({ where: { email } });
+  let user;
+
+  if (!userExists) {
+    user = await database.mutation.createUser({
+      data: {
+        spotifyId,
+        email,
+        name,
         accessToken,
         refreshToken,
-        expires_in
-      } = req.user;
-
-      const email = emails[0].value;
-      const time_expires = getTimeExpires(expires_in);
-
-      const userExists = await database.query.user({ where: { email } });
-      let user;
-
-      if (!userExists) {
-        user = await database.mutation.createUser({
-          data: {
-            spotifyId,
-            email,
-            name
-          }
-        });
-      } else {
-        user = userExists;
+        time_expires
       }
+    });
+  } else {
+    user = userExists;
+  }
 
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user.id, accessToken, refreshToken, time_expires },
-        process.env.APP_SECRET
-      );
+  // Generate JWT token
+  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
-      // Set cookie with token
-      res.cookie("token", token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
-      });
-
-      next();
-    }
-  );
-
-  // Callback
-  server.express.use("/auth/spotify/callback", (req, res) => {
-    res.redirect("/");
+  // Set cookie with token
+  res.cookie("token", token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
   });
 
-  // Logout
-  server.express.use("/auth/logout", (req, res) => {
-    res.clearCookie("token");
-    req.logout();
-    res.redirect("/");
-  });
+  next();
+};
+
+/**
+ * Redirect user after login
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {void}
+ */
+
+exports.authCallback = (req, res) => {
+  res.redirect("/");
+};
+
+/**
+ * Log out user
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {void}
+ */
+
+exports.logout = (req, res) => {
+  res.clearCookie("token");
+  req.logout();
+  res.redirect("/");
 };

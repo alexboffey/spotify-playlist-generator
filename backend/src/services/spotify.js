@@ -22,3 +22,20 @@ exports.spotifyApi = new SpotifyWebApi({
   clientID: process.env.SPOTIFY_CLIENT,
   clientSecret: process.env.SPOTIFY_SECRET
 });
+
+exports.serializeUser = function(user, done) {
+  return done(null, user);
+};
+
+exports.scope = [
+  "user-read-email",
+  "user-read-private",
+  "user-library-modify",
+  "user-library-read",
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "playlist-modify-public",
+  "playlist-modify-private",
+  "user-read-recently-played",
+  "user-top-read"
+];

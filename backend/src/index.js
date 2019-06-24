@@ -1,13 +1,38 @@
 require("dotenv").config({ path: ".env" });
 const passport = require("passport");
+const refresh = require("passport-oauth2-refresh");
+const cookieParser = require("cookie-parser");
+
+const { strategy, serializeUser, scope } = require("./services/spotify");
+const {
+  decodeJwt,
+  populateUser,
+  updateAccessToken
+} = require("./middleware/server");
+const { authenticate, authCallback, logout } = require("./routes/auth");
 const server = require("./lib/createServer")();
 
-// Middleware
-require("./middleware/passport")(passport);
-require("./middleware/server")(server);
+// Passport middleware
+passport.use(strategy);
+refresh.use(strategy);
+passport.serializeUser(serializeUser);
+passport.deserializeUser(serializeUser);
+
+// Server middleware
+server.express.use(cookieParser());
+server.express.use(passport.initialize());
+server.express.use(decodeJwt);
+server.express.use(populateUser);
+server.express.use(updateAccessToken);
 
 // Routes
-require("./routes/auth")(server);
+server.express.use(
+  "/auth/spotify",
+  passport.authenticate("spotify", { scope, showDialog: true }),
+  authenticate
+);
+server.express.use("/auth/spotify/callback", authCallback);
+server.express.use("/auth/logout", logout);
 
 // Start server
 server.start(
