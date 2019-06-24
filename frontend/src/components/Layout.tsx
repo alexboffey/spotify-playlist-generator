@@ -13,18 +13,23 @@ interface IAppLayout {
   };
   content: () => React.ReactElement;
   sidebar: () => React.ReactElement;
+  className?: string;
 }
 
 const AppLayout: React.FunctionComponent<IAppLayout> = ({
   content,
   sidebar,
-  me
+  me,
+  className
 }) => {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header style={{ background: "#fff" }}>
+    <Layout style={{ minHeight: "100vh" }} className={className}>
+      <Header style={{ background: "#fff", padding: "0 2rem" }}>
         <div style={{ display: "flex", maxWidth: "1360px" }}>
-          <h1>Spotify Toolkit</h1>
+          <h1>
+            <Icon type="tool" style={{ marginRight: ".8rem" }} />
+            Spotify Toolkit
+          </h1>
           <nav style={{ marginLeft: "auto" }}>
             <Dropdown
               placement="bottomRight"

@@ -26,9 +26,9 @@ const ExportAsPlaylistModal: React.FunctionComponent<IProps> = ({
       variables={{ playlistName, tracks }}
       onCompleted={data => {
         message.success(
-          `You successfully created a Spotify Playlist: ${
+          `You successfully created a Spotify Playlist with the name ${
             data.exportAsPlaylist.name
-          }!`
+          }`
         );
         setPlaylistName("");
         setVisible(false);
