@@ -22,7 +22,7 @@ interface IProps {
 const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const [seedsModalVisible, setSeedsModalVisible] = useState<boolean>(false);
   const [exportModalVisible, setExportModalVisible] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useState<string>("");
+  const [isPlaying, setIsPlaying] = useState<any>(null);
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
@@ -108,7 +108,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
               <PlayingContext.Provider
                 value={{
                   currentlyPlaying: isPlaying,
-                  setCurrentlyPlaying: (val: string) => {
+                  setCurrentlyPlaying: (val) => {
                     setIsPlaying(val);
                   }
                 }}

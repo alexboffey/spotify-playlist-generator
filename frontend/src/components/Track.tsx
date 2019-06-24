@@ -28,11 +28,16 @@ const Track: React.FunctionComponent<IProps> = ({
     setAudio(new Audio(preview_url));
   }, [preview_url]);
 
-  if (playing && currentlyPlaying !== id && audio) {
-    audio.pause();
-    audio.currentTime = 0;
-    setPlaying(false);
-  }
+  // Stop audio playing on unmount
+  useEffect(() => {
+    return function cleanup() {
+      if (playing && currentlyPlaying && currentlyPlaying.id === id) {
+        audio.pause();
+        audio.currentTime = 0;
+        setPlaying(false);
+      }
+    };
+  }, [playing, currentlyPlaying, setPlaying, setCurrentlyPlaying]);
 
   return (
     <List.Item>
@@ -58,11 +63,11 @@ const Track: React.FunctionComponent<IProps> = ({
             audio.pause();
             audio.currentTime = 0;
             setPlaying(false);
-            setCurrentlyPlaying("");
+            setCurrentlyPlaying({ id: null, audio: null });
           } else if (!playing) {
             audio.play();
             setPlaying(true);
-            setCurrentlyPlaying(id);
+            setCurrentlyPlaying({ id, audio });
           }
         }}
       >

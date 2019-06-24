@@ -1,6 +1,6 @@
 import React from "react";
 
 export const PlayingContext = React.createContext({
-  currentlyPlaying: "",
-  setCurrentlyPlaying: (val: string) => {}
+  currentlyPlaying: { id: null, audio: null },
+  setCurrentlyPlaying: (val: { id: any; audio: any }) => {}
 });
