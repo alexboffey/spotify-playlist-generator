@@ -25,8 +25,20 @@ const Track: React.FunctionComponent<IProps> = ({
 
   // Initialise audio object as side effect
   useEffect(() => {
-    setAudio(new Audio(preview_url));
+    if (preview_url) {
+      const audio = new Audio(preview_url);
+      setAudio(audio);
+    }
   }, [preview_url]);
+
+  // Listen for audio ending events
+  useEffect(() => {
+    if (audio) {
+      audio.addEventListener("ended", () => {
+        setPlaying(false);
+      });
+    }
+  }, [audio]);
 
   // Stop audio playing on unmount
   useEffect(() => {
@@ -37,7 +49,7 @@ const Track: React.FunctionComponent<IProps> = ({
         setPlaying(false);
       }
     };
-  }, [playing, currentlyPlaying, setPlaying, setCurrentlyPlaying]);
+  }, [playing, currentlyPlaying, setPlaying, setCurrentlyPlaying, audio, id]);
 
   return (
     <List.Item>
