@@ -1,38 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { List, Avatar, Button } from "antd";
 import { reverse } from "lodash";
 
-interface IPlayer {
-  audio: {
-    play: () => void;
-    pause: () => void;
-    currentTime: number;
-  };
-}
+import { PlayingContext } from "./PlayingContext";
 
-const Player: React.FunctionComponent<IPlayer> = ({ audio }) => {
-  const [playing, setPlaying] = useState(false);
-
-  return (
-    <Button
-      icon={playing ? "pause-circle" : "play-circle"}
-      onClick={() => {
-        if (playing) {
-          audio.pause();
-          audio.currentTime = 0;
-          setPlaying(false);
-        } else if (!playing) {
-          audio.play();
-          setPlaying(true);
-        }
-      }}
-    >
-      {playing ? "Pause" : "Play"}
-    </Button>
-  );
-};
-
-interface ITrack {
+interface IProps {
   id: string;
   name: string;
   preview_url?: string;
@@ -40,13 +12,27 @@ interface ITrack {
   album: { id: string; name: string; images: Array<{ url: string }> };
 }
 
-const Track: React.FunctionComponent<ITrack> = ({
+const Track: React.FunctionComponent<IProps> = ({
+  id,
   name,
   artists,
   album,
   preview_url
 }) => {
-  const audio = new Audio(preview_url);
+  const [playing, setPlaying] = useState(false);
+  const [audio, setAudio] = useState();
+  const { currentlyPlaying, setCurrentlyPlaying } = useContext(PlayingContext);
+
+  // Initialise audio object as side effect
+  useEffect(() => {
+    setAudio(new Audio(preview_url));
+  }, [preview_url]);
+
+  if (playing && currentlyPlaying !== id && audio) {
+    audio.pause();
+    audio.currentTime = 0;
+    setPlaying(false);
+  }
 
   return (
     <List.Item>
@@ -63,7 +49,25 @@ const Track: React.FunctionComponent<ITrack> = ({
         title={<span>{name}</span>}
         description={artists.map(({ name }) => name).join(", ")}
       />
-      <Player audio={audio} />
+      <Button
+        disabled={!preview_url}
+        title={preview_url ? "Preview track" : "Track preview not available"}
+        icon={playing ? "pause-circle" : "play-circle"}
+        onClick={() => {
+          if (playing) {
+            audio.pause();
+            audio.currentTime = 0;
+            setPlaying(false);
+            setCurrentlyPlaying("");
+          } else if (!playing) {
+            audio.play();
+            setPlaying(true);
+            setCurrentlyPlaying(id);
+          }
+        }}
+      >
+        {playing ? "Pause" : "Play"}
+      </Button>
     </List.Item>
   );
 };

@@ -12,6 +12,7 @@ import SeedsModal from "./SeedsModal";
 import { IArtist } from "../interfaces";
 import SeedTags from "./SeedTags";
 import ExportAsPlaylistModal from "./ExportAsPlaylistModal";
+import { PlayingContext } from "./PlayingContext";
 
 interface IProps {
   seeds: Array<IArtist>;
@@ -21,6 +22,7 @@ interface IProps {
 const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
   const [seedsModalVisible, setSeedsModalVisible] = useState<boolean>(false);
   const [exportModalVisible, setExportModalVisible] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<string>("");
   const formattedSeeds = seeds.map(({ id }) => id).join(",");
 
   return (
@@ -100,21 +102,23 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
                     : []
                 }
               />
-
-              {/* <Button
-                type="ghost"
-                icon="save"
-                disabled={loading}
-                title="Save as Template"
-              /> */}
             </div>
 
             <List loading={loading}>
-              {data &&
-                !loading &&
-                data.generatePlaylist.tracks.map(track => (
-                  <Track key={track.id} {...track} />
-                ))}
+              <PlayingContext.Provider
+                value={{
+                  currentlyPlaying: isPlaying,
+                  setCurrentlyPlaying: (val: string) => {
+                    setIsPlaying(val);
+                  }
+                }}
+              >
+                {data &&
+                  !loading &&
+                  data.generatePlaylist.tracks.map(track => (
+                    <Track key={track.id} {...track} />
+                  ))}
+              </PlayingContext.Provider>
             </List>
           </React.Fragment>
         );
