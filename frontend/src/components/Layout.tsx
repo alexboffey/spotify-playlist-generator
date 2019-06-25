@@ -24,8 +24,20 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
 }) => {
   return (
     <Layout style={{ minHeight: "100vh" }} className={className}>
-      <Header style={{ background: "#fff", padding: "0 2rem" }}>
-        <div style={{ display: "flex", maxWidth: "1360px" }}>
+      <Header
+        style={{
+          background: "#fff",
+          padding: "0 2rem"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            maxWidth: "1360px",
+            marginLeft: "auto",
+            marginRight: "auto"
+          }}
+        >
           <h1>Spotify Toolkit</h1>
           <nav style={{ marginLeft: "auto" }}>
             <Dropdown
@@ -77,7 +89,9 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
             padding: "1rem 0",
             background: "#fff",
             maxWidth: "1360px",
-            borderTop: "3px solid #722ed1"
+            borderTop: "3px solid #722ed1",
+            marginLeft: "auto",
+            marginRight: "auto"
           }}
         >
           {sidebar()}
@@ -88,7 +102,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({
       </Content>
 
       <Footer style={{ background: "#fff" }}>
-        <div style={{ textAlign: "center", maxWidth: "1360px" }}>
+        <div style={{ textAlign: "center", maxWidth: "1360px", marginLeft: "auto", marginRight: "auto" }}>
           &copy;{new Date().getFullYear()} Spotify Toolkit. Created by{" "}
           <a
             style={{

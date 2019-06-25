@@ -18,11 +18,11 @@ const Login: React.FunctionComponent = () => {
         style={{ width: 400, marginTop: -200, borderTop: "3px solid #722ed1" }}
       >
         <header>
-          <Title>Spotify Toolkit</Title>
+          <Title style={{ fontSize: "36px" }}>Spotify Toolkit</Title>
         </header>
         <p className="lead">
-          Use your listening history from Spotify to see your top artists, tracks
-          and generate playlists based on them.
+          Use your listening history from Spotify to see your top artists,
+          tracks and generate playlists based on them.
         </p>
         <footer>
           <a href="/auth/spotify">
@@ -30,13 +30,6 @@ const Login: React.FunctionComponent = () => {
               Sign In with Spotify
             </Button>
           </a>
-          {/* <Button
-            style={{ marginLeft: ".5rem" }}
-            type="ghost"
-            icon="info-circle"
-          >
-            More Info
-          </Button> */}
         </footer>
       </Card>
     </Layout>
