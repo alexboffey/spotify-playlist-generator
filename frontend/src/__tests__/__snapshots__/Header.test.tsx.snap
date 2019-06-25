@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> Should render with the action prop 1`] = `
+<Fragment>
+  <header
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "marginTop": ".5rem",
+      }
+    }
+  >
+    <h2
+      style={
+        Object {
+          "marginBottom": 0,
+          "marginRight": "auto",
+        }
+      }
+    >
+      Some Title
+    </h2>
+    <span>
+      I am an action
+    </span>
+  </header>
+  <Divider />
+</Fragment>
+`;
+
+exports[`<Header /> Should render without the action prop 1`] = `
+<Fragment>
+  <header
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "marginTop": ".5rem",
+      }
+    }
+  >
+    <h2
+      style={
+        Object {
+          "marginBottom": 0,
+          "marginRight": "auto",
+        }
+      }
+    >
+      Some Title
+    </h2>
+  </header>
+  <Divider />
+</Fragment>
+`;
