@@ -1,5 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
+import toJSON from "enzyme-to-json";
 import Header from "../components/Header";
 
 describe("<Header />", () => {
@@ -12,6 +13,6 @@ describe("<Header />", () => {
     const wrapper = shallow(
       <Header title="Some Title" action={<span>I am an action</span>} />
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(toJSON(wrapper)).toMatchSnapshot();
   });
 });

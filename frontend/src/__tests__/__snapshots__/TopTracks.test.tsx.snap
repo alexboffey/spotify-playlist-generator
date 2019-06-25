@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopArtists /> Queries, renders data and matches snapshot 1`] = `
+<div
+  className="ant-list ant-list-split"
+>
+  <Spin
+    size="default"
+    spinning={false}
+    wrapperClassName=""
+  >
+    <div
+      className="ant-spin-nested-loading"
+    >
+      <div
+        className="ant-spin-container"
+        key="container"
+      >
+        <Item
+          key="someId"
+        >
+          <li
+            className="ant-list-item"
+          >
+            <Meta
+              avatar={
+                <Avatar
+                  shape="square"
+                  size="large"
+                  src="someImageUrl"
+                >
+                  s
+                </Avatar>
+              }
+              description="someArtistName"
+              title="someTrackName"
+            >
+              <div
+                className="ant-list-item-meta"
+              >
+                <div
+                  className="ant-list-item-meta-avatar"
+                >
+                  <Avatar
+                    shape="square"
+                    size="large"
+                    src="someImageUrl"
+                  >
+                    <span
+                      className="ant-avatar ant-avatar-lg ant-avatar-square ant-avatar-image"
+                      style={Object {}}
+                    >
+                      <img
+                        onError={[Function]}
+                        src="someImageUrl"
+                      />
+                    </span>
+                  </Avatar>
+                </div>
+                <div
+                  className="ant-list-item-meta-content"
+                >
+                  <h4
+                    className="ant-list-item-meta-title"
+                  >
+                    someTrackName
+                  </h4>
+                  <div
+                    className="ant-list-item-meta-description"
+                  >
+                    someArtistName
+                  </div>
+                </div>
+              </div>
+            </Meta>
+          </li>
+        </Item>
+      </div>
+    </div>
+  </Spin>
+</div>
+`;
