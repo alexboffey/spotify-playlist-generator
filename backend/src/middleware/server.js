@@ -48,6 +48,15 @@ exports.populateUser = async (req, res, next) => {
 
   req.user = user;
 
+  if (getMinutesUntilExpiration(user.time_expires) < 2) {
+    const {accessToken, time_expires} = await refreshAccessToken(user.refreshToken);
+
+    req.user.accessToken = accessToken;
+    req.user.time_expires = time_expires
+
+    spotifyApi.setAccessToken(accessToken);
+  }
+
   next();
 };
 
@@ -60,36 +69,48 @@ exports.populateUser = async (req, res, next) => {
  * @returns {void}
  */
 
-exports.updateAccessToken = (req, res, next) => {
+exports.updateAccessToken = async (req, res, next) => {
   if (!req.userId) return next();
 
   // Update access token if necessary
-  if (getMinutesUntilExpiration(req.user.time_expires) < 0) {
-    refresh.requestNewAccessToken(
-      "spotify",
-      req.user.refreshToken,
-      async (err, accessToken) => {
-        if (err) throw new Error(err);
+  if (getMinutesUntilExpiration(req.user.time_expires) < 2) {
+    const {accessToken, time_expires} = await refreshAccessToken(req.user.refreshToken);
 
-        const time_expires = getTimeExpires();
+    req.user.accessToken = accessToken;
+    req.user.time_expires = time_expires
 
-        // Update user in db
-        await database.mutation.updateUser({
-          data: {
-            accessToken,
-            time_expires
-          },
-          where: { id: req.userId }
-        });
-
-        // Update user details
-        req.user.accessToken = accessToken;
-        req.user.time_expires = time_expires;
-
-        spotifyApi.setAccessToken(accessToken);
-      }
-    );
+    spotifyApi.setAccessToken(accessToken);
   }
 
   next();
 };
+
+/**
+ *
+ * @param {string} refreshToken
+ * @return {Object}
+ */
+
+async function refreshAccessToken(refreshToken) {
+  refresh.requestNewAccessToken(
+    "spotify",
+    refreshToken,
+    async (err, accessToken) => {
+      if (err) throw new Error(err);
+
+      const time_expires = getTimeExpires();
+
+      // Update user in db
+      await database.mutation.updateUser({
+        data: {
+          accessToken,
+          time_expires
+        },
+        where: { id: req.userId }
+      });
+
+      // Return new data
+      return { accessToken, time_expires };
+    }
+  );
+}
