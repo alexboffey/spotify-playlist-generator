@@ -7,6 +7,26 @@ import { SEARCH_ARTISTS_QUERY, ISearchArtistsQuery } from "../graphql/search";
 import { IArtist } from "../interfaces";
 import SeedTags from "./SeedTags";
 
+export const SeedsModalSearch: React.FunctionComponent<{
+  setSearchData: (val: any) => void;
+}> = ({ setSearchData }) => (
+  <ApolloConsumer>
+    {client => (
+      <Input.Search
+        onChange={async e => {
+          if (!e.target.value) return setSearchData(null);
+          const { data }: { data: ISearchArtistsQuery } = await client.query({
+            query: SEARCH_ARTISTS_QUERY,
+            variables: { query: e.target.value, limit: 10 }
+          });
+          setSearchData(data);
+        }}
+        placeholder={`Artist name...`}
+      />
+    )}
+  </ApolloConsumer>
+);
+
 interface IProps {
   visible: boolean;
   setVisible: (visible: boolean) => void;
@@ -33,6 +53,7 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
         <Button
           key="done-button"
           type="primary"
+          title="done"
           onClick={() => setVisible(!visible)}
         >
           Done
@@ -46,23 +67,7 @@ const SeedsModal: React.FunctionComponent<IProps> = ({
       <div>
         <Form>
           <Form.Item label="Search for an artist">
-            <ApolloConsumer>
-              {client => (
-                <Input.Search
-                  onChange={async e => {
-                    if (!e.target.value) return setSearchData(null);
-                    const {
-                      data
-                    }: { data: ISearchArtistsQuery } = await client.query({
-                      query: SEARCH_ARTISTS_QUERY,
-                      variables: { query: e.target.value, limit: 10 }
-                    });
-                    setSearchData(data);
-                  }}
-                  placeholder={`Artist name...`}
-                />
-              )}
-            </ApolloConsumer>
+            <SeedsModalSearch setSearchData={setSearchData} />
           </Form.Item>
         </Form>
 
