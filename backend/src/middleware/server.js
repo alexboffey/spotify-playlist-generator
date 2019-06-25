@@ -46,17 +46,6 @@ exports.populateUser = async (req, res, next) => {
     spotifyApi.setAccessToken(user.accessToken);
   }
 
-  req.user = user;
-
-  if (getMinutesUntilExpiration(user.time_expires) < 2) {
-    const {accessToken, time_expires} = await refreshAccessToken(user.refreshToken);
-
-    req.user.accessToken = accessToken;
-    req.user.time_expires = time_expires
-
-    spotifyApi.setAccessToken(accessToken);
-  }
-
   next();
 };
 
@@ -73,12 +62,10 @@ exports.updateAccessToken = async (req, res, next) => {
   if (!req.userId) return next();
 
   // Update access token if necessary
-  if (getMinutesUntilExpiration(req.user.time_expires) < 2) {
+  if (getMinutesUntilExpiration(req.user.time_expires) < 1) {
     const {accessToken, time_expires} = await refreshAccessToken(req.user.refreshToken);
-
     req.user.accessToken = accessToken;
     req.user.time_expires = time_expires
-
     spotifyApi.setAccessToken(accessToken);
   }
 
@@ -86,7 +73,6 @@ exports.updateAccessToken = async (req, res, next) => {
 };
 
 /**
- *
  * @param {string} refreshToken
  * @return {Object}
  */
