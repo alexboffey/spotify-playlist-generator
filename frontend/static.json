@@ -4,8 +4,11 @@
     "/**": "index.html"
   },
   "proxies": {
-    "/auth/": {
-      "origin": "https://spotify-toolkit.herokuapp.com/auth"
+    "/auth/spotify": {
+      "origin": "https://spotify-toolkit.herokuapp.com/auth/spotify"
+    },
+    "/auth/logout": {
+      "origin": "https://spotify-toolkit.herokuapp.com/auth/logout"
     }
   }
 }
