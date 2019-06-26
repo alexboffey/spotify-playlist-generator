@@ -1,13 +1,13 @@
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+
 import { endpoint, prodEndpoint } from "../config";
 
 export default new ApolloClient({
-  uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-  request: operation => {
-    operation.setContext({
-      fetchOptions: {
-        credentials: "include"
-      }
-    });
-  }
+  link: createHttpLink({
+    uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
+    credentials: "include"
+  }),
+  cache: new InMemoryCache()
 });

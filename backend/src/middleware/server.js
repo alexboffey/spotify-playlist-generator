@@ -39,7 +39,6 @@ exports.decodeJwt = (req, res, next) => {
  */
 
 exports.populateUser = async (req, res, next) => {
-  console.log("middleware/server.populateUser", req.userId);
   if (!req.userId) return next();
 
   const user = await database.query.user(
@@ -67,7 +66,6 @@ exports.populateUser = async (req, res, next) => {
  */
 
 exports.updateAccessToken = async (req, res, next) => {
-  console.log("middleware/server.updateAccessToken", req.userId);
   if (!req.userId) return next();
 
   // Update access token if necessary
