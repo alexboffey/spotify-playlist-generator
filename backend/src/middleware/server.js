@@ -15,6 +15,8 @@ const { getMinutesUntilExpiration, getTimeExpires } = require("../lib/time");
  */
 
 exports.decodeJwt = (req, res, next) => {
+  console.log("middleware/server.decodeJwt", req.cookies);
+
   const { token } = req.cookies;
 
   console.log("middleware/server.decodeJwt", token);
@@ -70,9 +72,11 @@ exports.updateAccessToken = async (req, res, next) => {
 
   // Update access token if necessary
   if (getMinutesUntilExpiration(req.user.time_expires) < 1) {
-    const {accessToken, time_expires} = await refreshAccessToken(req.user.refreshToken);
+    const { accessToken, time_expires } = await refreshAccessToken(
+      req.user.refreshToken
+    );
     req.user.accessToken = accessToken;
-    req.user.time_expires = time_expires
+    req.user.time_expires = time_expires;
     spotifyApi.setAccessToken(accessToken);
   }
 
