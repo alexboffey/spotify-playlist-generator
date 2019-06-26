@@ -1,5 +1,5 @@
-#endpoint: https://eu1.prisma.sh/alex-boffey-9406f5/spotify-playlist-generator-dev/dev
-endpoint: https://spotify-toolkit-0e8487f72f.herokuapp.com/spotify-toolkit-prod/prod
+endpoint: https://eu1.prisma.sh/alex-boffey-9406f5/spotify-playlist-generator-dev/dev
+# endpoint: https://spotify-toolkit-0e8487f72f.herokuapp.com/spotify-toolkit-prod/prod
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_SECRET}
 hooks:

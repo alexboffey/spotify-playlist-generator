@@ -46,6 +46,9 @@ exports.populateUser = async (req, res, next) => {
     spotifyApi.setAccessToken(user.accessToken);
   }
 
+  // Put user on request obj
+  req.user = user;
+
   next();
 };
 
