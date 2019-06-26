@@ -17,9 +17,13 @@ const { getMinutesUntilExpiration, getTimeExpires } = require("../lib/time");
 exports.decodeJwt = (req, res, next) => {
   const { token } = req.cookies;
 
+  console.log("middleware/server.decodeJwt", token);
+
   if (token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
     req.userId = userId;
+
+    console.log("middleware/server.decodeJwt", userId);
   }
 
   next();
@@ -35,6 +39,7 @@ exports.decodeJwt = (req, res, next) => {
  */
 
 exports.populateUser = async (req, res, next) => {
+  console.log("middleware/server.populateUser", req.userId);
   if (!req.userId) return next();
 
   const user = await database.query.user(
@@ -62,6 +67,7 @@ exports.populateUser = async (req, res, next) => {
  */
 
 exports.updateAccessToken = async (req, res, next) => {
+  console.log("middleware/server.updateAccessToken", req.userId);
   if (!req.userId) return next();
 
   // Update access token if necessary
