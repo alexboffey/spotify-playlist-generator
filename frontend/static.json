@@ -5,7 +5,7 @@
   },
   "proxies": {
     "/auth/": {
-      "origin": "https://spotify-toolkit.herokuapp.com"
+      "origin": "https://spotify-toolkit.herokuapp.com/auth"
     }
   }
 }
