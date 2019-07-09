@@ -15,8 +15,6 @@ const { getMinutesUntilExpiration, getTimeExpires } = require("../lib/time");
  */
 
 exports.decodeJwt = (req, res, next) => {
-  console.log("middleware/server.decodeJwt", req.cookies);
-
   const { token } = req.cookies;
 
   console.log("middleware/server.decodeJwt", token);
@@ -73,7 +71,8 @@ exports.updateAccessToken = async (req, res, next) => {
   // Update access token if necessary
   if (getMinutesUntilExpiration(req.user.time_expires) < 1) {
     const { accessToken, time_expires } = await refreshAccessToken(
-      req.user.refreshToken
+      req.user.refreshToken,
+      req.userId
     );
     req.user.accessToken = accessToken;
     req.user.time_expires = time_expires;
@@ -85,10 +84,11 @@ exports.updateAccessToken = async (req, res, next) => {
 
 /**
  * @param {string} refreshToken
+ * @param {string} userId
  * @return {Object}
  */
 
-async function refreshAccessToken(refreshToken) {
+async function refreshAccessToken(refreshToken, userId) {
   refresh.requestNewAccessToken(
     "spotify",
     refreshToken,
@@ -103,7 +103,7 @@ async function refreshAccessToken(refreshToken) {
           accessToken,
           time_expires
         },
-        where: { id: req.userId }
+        where: { id: userId }
       });
 
       // Return new data
