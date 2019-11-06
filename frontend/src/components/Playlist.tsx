@@ -45,7 +45,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                marginBottom: "1rem"
+                marginBottom: "1.5rem"
               }}
             >
               <div
@@ -108,7 +108,7 @@ const Playlist: React.FunctionComponent<IProps> = ({ seeds, setSeeds }) => {
               <PlayingContext.Provider
                 value={{
                   currentlyPlaying: isPlaying,
-                  setCurrentlyPlaying: (val) => {
+                  setCurrentlyPlaying: val => {
                     setIsPlaying(val);
                   }
                 }}

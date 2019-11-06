@@ -1,5 +1,17 @@
 import React from "react";
-import { Divider } from "antd";
+import styled from "styled-components";
+
+const StyledHeader = styled.header`
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin-bottom: 0;
+    margin-right: auto;
+  }
+`;
 
 interface IProps {
   title: string;
@@ -9,13 +21,10 @@ interface IProps {
 const Header: React.FunctionComponent<IProps> = ({ title, action }) => {
   return (
     <React.Fragment>
-      <header
-        style={{ display: "flex", alignItems: "center", marginTop: ".5rem" }}
-      >
-        <h2 style={{ marginBottom: 0, marginRight: "auto" }}>{title}</h2>
+      <StyledHeader>
+        <h2>{title}</h2>
         {action}
-      </header>
-      <Divider />
+      </StyledHeader>
     </React.Fragment>
   );
 };

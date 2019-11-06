@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
-import { Avatar, message, List, Form, Select } from "antd";
+import { Avatar, message, List } from "antd";
 import { startCase, reverse } from "lodash";
 
 import Header from "./Header";
@@ -8,10 +8,11 @@ import {
   IMyTopArtistsQuery,
   MY_TOP_ARTISTS_QUERY
 } from "../graphql/myTopArtistsQuery";
+import TermSwitcher from "./TermSwitcher";
+import { HistoricalTerms } from "../types";
 
 const TopArtists: React.FunctionComponent = () => {
-  const initialTimeRange = "short_term";
-  const [timeRange, setTimeRange] = useState<string>(initialTimeRange);
+  const [timeRange, setTimeRange] = useState<HistoricalTerms>("short_term");
 
   return (
     <Query<IMyTopArtistsQuery>
@@ -24,29 +25,14 @@ const TopArtists: React.FunctionComponent = () => {
 
         return (
           <React.Fragment>
-            <Header
-              title="Top Artists"
-              action={
-                <Form layout="inline">
-                  <Form.Item label="Time Range">
-                    <Select
-                      defaultValue={initialTimeRange}
-                      onChange={(value: string) => {
-                        setTimeRange(value);
-                        refetch();
-                      }}
-                    >
-                      <Select.Option value="short_term">
-                        Short Term
-                      </Select.Option>
-                      <Select.Option value="medium_term">
-                        Medium Term
-                      </Select.Option>
-                      <Select.Option value="long_term">Long Term</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Form>
-              }
+            <Header title="Top Artists" />
+
+            <TermSwitcher
+              currentKey={timeRange}
+              onClick={({ key }: { key: HistoricalTerms }) => {
+                setTimeRange(key);
+                refetch();
+              }}
             />
 
             <List loading={loading}>
